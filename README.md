@@ -1,2 +1,23 @@
-# ifpr-remedios
-Nursing association for mobile and web app for simple medicines and their descriptions listing, adding and edit. Made in IFPR Londrina.
+#  Projeto Remedios
+Associação com o curso de Enfermagem para o desenvolvimento de uma aplicação web e mobile para listar, adicionar e editar medicamentos. Feito em equipe com [Estevão](https://github.com/estevaofrancisco867), [Victor](https://github.com/VictorAkiyama) e João Otávio no IFPR Londrina.
+
+# Como importar o projeto no Eclipse
+Após fazer o download do arquivo **remedios.zip** e extrair, abrir o Eclipse ir em: File > Import... > Maven > Existing Maven Projects > Browse. Encontre o arquivo **remedios** e o selecione. Deixe o **pom.xml** marcado e clique em Finish.
+
+# Como executar o servidor Apache Tomcat
+Primeiro, certifique-se da aba **Servers** estar aparecendo no Eclipse, se não estiver, vá em Window > Show View > Other e pesquise Servers.
+Depois clique em **No servers are available. ...**, Clique na pasta Apache e selecione **Tomcat v11.0 Server** instale caso não esteja ainda e selecione a pasta do Apache Tomcat. Clique em Next e no projeto **remedios** e o passe para o outro lado e depois Finish.
+
+#  Projeto Remedios
+Nursing course association for mobile and web app development for medicines and their descriptions listing, adding and edit. Made in team with [Estevao](https://github.com/estevaofrancisco867), [Victor](https://github.com/VictorAkiyama) and Joao Otavio in IFPR Londrina.
+
+# How to Import the Project into Eclipse
+After downloading the **remedios.zip** file and extracting it, open Eclipse and go to: File > Import... > Maven > Existing Maven Projects > Browse. Find the **remedios** folder and select it. Make sure **pom.xml** is checked, then click Finish.
+
+# How to Run the Apache Tomcat Server
+First, make sure the **Servers** tab is visible in Eclipse. If it is not, go to Window > Show View > Other and search for "Servers".  
+Then click on **No servers are available. ...**, open the Apache folder, and select **Tomcat v11.0 Server**. Install it if it is not already installed, and select the Apache Tomcat folder.  
+Click Next, select the **remedios** project and move it to the configured side, then click Finish.
+
+
+
