@@ -1,0 +1,5 @@
+Cadastro: http://localhost/remedios/arquivosPHP/cadastrar.php
+
+Listar remédios: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios.php
+
+Listar remédios (JSON) do Servlet: http://localhost:8080/remedios/api/remedios
