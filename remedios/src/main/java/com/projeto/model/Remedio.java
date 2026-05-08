@@ -1,7 +1,7 @@
 package com.projeto.model;
 
-import java.util.List;
-import com.google.gson.annotations.Expose;
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,25 +18,41 @@ public class Remedio {
 
     @Column(name = "BULA", nullable = false)
     private String bula;
+    
+    @Column(name = "TIPO", nullable = false)
+    private String tipo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "ID_USUARIO")
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_DESCRICAO")
-    private Descricao descricao;
+    @ManyToOne
+    @JoinColumn(name = "ID_PRESCRICAO")
+    private Prescricao prescricao;
     
-    @Expose(serialize = false, deserialize = false)
     @OneToMany(mappedBy = "remedio")
-    private transient List<EmpresaRemedio> empresaRemedios;
+    private Set<SubstanciaRemedio> substanciasRemedios;
 
-    public List<EmpresaRemedio> getEmpresaRemedios() {
-      return empresaRemedios;
+    @OneToMany(mappedBy = "remedio")
+    private Set<EmpresaRemedio> empresasRemedios;
+
+    public Set<SubstanciaRemedio> getSubstanciasRemedios() {
+       return substanciasRemedios;
+    }
+    public Set<EmpresaRemedio> getEmpresasRemedios() {
+      return empresasRemedios;
    }
+    
+    public String getTipo() {
+       return tipo;
+    }
 
-    public void setEmpresaRemedios(List<EmpresaRemedio> empresaRemedios) {
-       this.empresaRemedios = empresaRemedios;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+     }
+
+    public void setEmpresaRemedios(Set<EmpresaRemedio> empresaRemedios) {
+       this.empresasRemedios = empresaRemedios;
     }
 
     public Integer getId() {
@@ -45,6 +61,10 @@ public class Remedio {
 
     public String getNome() {
         return nome;
+    }
+
+    public void setId(Integer id) {
+       this.id = id;
     }
 
     public void setNome(String nome) {
@@ -67,11 +87,11 @@ public class Remedio {
        this.usuario = usuario;
    }
 
-    public Descricao getDescricao() {
-       return descricao;
+    public Prescricao getPrescricao() {
+       return prescricao;
    }
 
-   public void setDescricao(Descricao descricao) {
-       this.descricao = descricao;
+   public void setPrescricao(Prescricao prescricao) {
+       this.prescricao = prescricao;
    }
 }

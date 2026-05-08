@@ -9,7 +9,7 @@ public class EmpresaRemedio {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "ID_EMPRESA_REMEDIO")
-   private Integer id;
+   private int id;
 
    @ManyToOne
    @JoinColumn(name = "ID_EMPRESA", nullable = false)

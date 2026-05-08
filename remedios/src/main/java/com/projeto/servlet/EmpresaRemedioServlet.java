@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.projeto.dao.EmpresaDAO;
 import com.projeto.dao.EmpresaRemedioDAO;
 import com.projeto.dao.RemedioDAO;
+import com.projeto.dto.RemedioDTO;
 import com.projeto.model.Empresa;
 import com.projeto.model.EmpresaRemedio;
 import com.projeto.model.Remedio;
@@ -59,7 +60,7 @@ public class EmpresaRemedioServlet extends HttpServlet {
           int idRemedio = json.get("idRemedio").getAsInt();
           
           Empresa empresa = empresaDAO.buscarPorId(idEmpresa);
-          Remedio remedio = remedioDAO.buscarPorId(idRemedio);
+          Remedio remedio = remedioDAO.buscarEntidadePorId(idRemedio);
 
           if (empresa == null || remedio == null) {
               respostaErro(resp, 404, "Empresa ou Remedio não encontrado");
