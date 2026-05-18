@@ -14,17 +14,20 @@ public class Prescricao {
     @Column(name = "PUBLICO_ALVO", nullable = false)
     private String publicoAlvo;
 
-    @Column(name = "PRECAUCOES", nullable = false)
-    private String precaucoes;
+    @Column(name = "RESTRICAO", nullable = false)
+    private String restricao;
 
     @Column(name = "CONTRA_INDICACOES", nullable = false)
     private String contraIndicacoes;
 
     @Column(name = "COMPOSICAO")
     private String composicao;
-    
-    @Column(name = "EFEITOS", nullable = false)
+
+	@Column(name = "EFEITOS", nullable = false)
     private String efeitos;
+    
+    @Column(name = "VALIDADE", nullable = false)
+    private String validade;
 
     // Getters e Setters
 
@@ -32,7 +35,11 @@ public class Prescricao {
         return id;
     }
 
-    public String getPublicoAlvo() {
+    public String getValidade() {
+		return validade;
+	}
+
+	public String getPublicoAlvo() {
         return publicoAlvo;
     }
 
@@ -40,12 +47,17 @@ public class Prescricao {
         this.publicoAlvo = publicoAlvo;
     }
 
-    public String getPrecaucoes() {
-        return precaucoes;
+    public String getRestricao() {
+        return restricao;
     }
 
-    public void setPrecaucoes(String precaucoes) {
-        this.precaucoes = precaucoes;
+    public String getEfeitos() {
+        return efeitos;
+    }
+
+
+    public void setRestricao(String restricao) {
+        this.restricao = restricao;
     }
 
     public String getContraIndicacoes() {
@@ -63,12 +75,12 @@ public class Prescricao {
     public void setComposicao(String composicao) {
         this.composicao = composicao;
     }
-
-    public String getEfeitos() {
-        return efeitos;
-    }
-
+    
     public void setEfeitos(String efeitos) {
         this.efeitos = efeitos;
     }
+    
+	public void setValidade(String validade) {
+		this.validade = validade;
+	}
 }

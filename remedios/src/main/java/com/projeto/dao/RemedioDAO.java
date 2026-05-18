@@ -2,13 +2,10 @@ package com.projeto.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import com.projeto.dto.RemedioDTO;
 import com.projeto.dto.SubstanciaDTO;
 import com.projeto.model.Remedio;
 import com.projeto.model.SubstanciaRemedio;
-import com.projeto.model.EmpresaRemedio;
 import com.projeto.util.JPAUtil;
 
 import jakarta.persistence.EntityManager;
@@ -40,7 +37,7 @@ public class RemedioDAO {
                // Prescrição
                if (r.getPrescricao() != null) {
                    dto.publicoAlvo = r.getPrescricao().getPublicoAlvo();
-                   dto.precaucoes = r.getPrescricao().getPrecaucoes();
+                   dto.restricao = r.getPrescricao().getRestricao();
                    dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
                    dto.composicao = r.getPrescricao().getComposicao();
                    dto.efeitos = r.getPrescricao().getEfeitos();
@@ -101,7 +98,7 @@ public class RemedioDAO {
            // Prescrição
            if (r.getPrescricao() != null) {
                dto.publicoAlvo = r.getPrescricao().getPublicoAlvo();
-               dto.precaucoes = r.getPrescricao().getPrecaucoes();
+               dto.restricao = r.getPrescricao().getRestricao();
                dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
                dto.composicao = r.getPrescricao().getComposicao();
                dto.efeitos = r.getPrescricao().getEfeitos();
@@ -161,7 +158,7 @@ public class RemedioDAO {
 
            if (r.getPrescricao() != null) {
                dto.publicoAlvo = r.getPrescricao().getPublicoAlvo();
-               dto.precaucoes = r.getPrescricao().getPrecaucoes();
+               dto.restricao = r.getPrescricao().getRestricao();
                dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
                dto.composicao = r.getPrescricao().getComposicao();
                dto.efeitos = r.getPrescricao().getEfeitos();
@@ -188,3 +185,4 @@ public class RemedioDAO {
        }
    }
 }
+

@@ -11,10 +11,11 @@ public class RemedioDTO {
 
     // Prescrição
     public String publicoAlvo;
-    public String precaucoes;
+    public String restricao;
     public String contraIndicacoes;
     public String composicao;
     public String efeitos;
+    public String validade;
 
     // Relacionamentos
     public List<SubstanciaDTO> substancias;

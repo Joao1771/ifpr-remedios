@@ -14,10 +14,15 @@ public class TesteJPA {
         // PRESCRIÇÃO
         Prescricao p = new Prescricao();
         p.setPublicoAlvo("Adultos");
-        p.setPrecaucoes("Nenhuma");
+        p.setRestricao("Nenhuma");
         p.setContraIndicacoes("Nenhuma");
         p.setComposicao("Composição X");
         p.setEfeitos("Efeito Y");
+        p.setValidade("24 meses");
+
+        // TARJA
+        Tarjas t = new Tarjas();
+        t.setNome("Tarja Vermelha");
 
         // REMÉDIO
         Remedio r = new Remedio();
@@ -25,6 +30,7 @@ public class TesteJPA {
         r.setBula("https://bula.com/paracetamol");
         r.setTipo("G");
         r.setPrescricao(p);
+        r.setTarjas(t);
 
         // CIDADE
         Cidade c = new Cidade();
@@ -42,16 +48,23 @@ public class TesteJPA {
         s.setNome("Paracetamol Base");
         s.setTipo("Química");
 
+        // PÚBLICO ALVO
+        PublicoAlvo pa = new PublicoAlvo();
+        pa.setNome("Adultos");
+
         em.getTransaction().begin();
 
         // salvar entidades base
         em.persist(p);
+        em.persist(t);
         em.persist(r);
 
         em.persist(c);
         em.persist(e);
 
         em.persist(s);
+
+        em.persist(pa);
 
         em.flush(); // garante IDs
 
@@ -66,6 +79,12 @@ public class TesteJPA {
         sr.setRemedio(r);
         sr.setSubstancia(s);
         em.persist(sr);
+
+        // RELACIONAMENTO REMEDIO ↔ PUBLICO_ALVO
+        RemedioPublicoAlvo rpa = new RemedioPublicoAlvo();
+        rpa.setRemedio(r);
+        rpa.setPublicoAlvo(pa);
+        em.persist(rpa);
 
         em.getTransaction().commit();
         em.close();

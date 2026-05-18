@@ -1,7 +1,7 @@
 package com.projeto.model;
 
 import java.util.Set;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,13 +13,13 @@ public class Remedio {
     @Column(name = "ID_REMEDIO")
     private Integer id;
 
-    @Column(name = "NOME", nullable = false)
+    @Column(name = "NOME", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "BULA", nullable = false)
+    @Column(name = "BULA", nullable = false, length = 255)
     private String bula;
-    
-    @Column(name = "TIPO", nullable = false)
+
+    @Column(name = "TIPO", nullable = false, length = 20)
     private String tipo;
 
     @ManyToOne
@@ -29,42 +29,35 @@ public class Remedio {
     @ManyToOne
     @JoinColumn(name = "ID_PRESCRICAO")
     private Prescricao prescricao;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "ID_TARJA")
+    private Tarjas Tarjas;
+
     @OneToMany(mappedBy = "remedio")
+    @JsonIgnore
     private Set<SubstanciaRemedio> substanciasRemedios;
 
     @OneToMany(mappedBy = "remedio")
+    @JsonIgnore
     private Set<EmpresaRemedio> empresasRemedios;
 
-    public Set<SubstanciaRemedio> getSubstanciasRemedios() {
-       return substanciasRemedios;
-    }
-    public Set<EmpresaRemedio> getEmpresasRemedios() {
-      return empresasRemedios;
-   }
-    
-    public String getTipo() {
-       return tipo;
-    }
+    @OneToMany(mappedBy = "remedio")
+    @JsonIgnore
+    private Set<RemedioPublicoAlvo> remediosPublicoAlvo;
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-     }
-
-    public void setEmpresaRemedios(Set<EmpresaRemedio> empresaRemedios) {
-       this.empresasRemedios = empresaRemedios;
-    }
+    // Getters e Setters
 
     public Integer getId() {
         return id;
     }
 
-    public String getNome() {
-        return nome;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setId(Integer id) {
-       this.id = id;
+    public String getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -79,19 +72,59 @@ public class Remedio {
         this.bula = bula;
     }
 
-    public Usuario getUsuario() {
-       return usuario;
-   }
+    public String getTipo() {
+        return tipo;
+    }
 
-   public void setUsuario(Usuario usuario) {
-       this.usuario = usuario;
-   }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public Prescricao getPrescricao() {
-       return prescricao;
-   }
+        return prescricao;
+    }
 
-   public void setPrescricao(Prescricao prescricao) {
-       this.prescricao = prescricao;
-   }
+    public void setPrescricao(Prescricao prescricao) {
+        this.prescricao = prescricao;
+    }
+
+    public Tarjas getTarjas() {
+        return Tarjas;
+    }
+
+    public void setTarjas(Tarjas Tarjas) {
+        this.Tarjas = Tarjas;
+    }
+
+    public Set<SubstanciaRemedio> getSubstanciasRemedios() {
+        return substanciasRemedios;
+    }
+
+    public void setSubstanciasRemedios(Set<SubstanciaRemedio> substanciasRemedios) {
+        this.substanciasRemedios = substanciasRemedios;
+    }
+
+    public Set<EmpresaRemedio> getEmpresasRemedios() {
+        return empresasRemedios;
+    }
+
+    public void setEmpresaRemedios(Set<EmpresaRemedio> empresaRemedios) {
+        this.empresasRemedios = empresaRemedios;
+    }
+
+    public Set<RemedioPublicoAlvo> getRemediosPublicoAlvo() {
+        return remediosPublicoAlvo;
+    }
+
+    public void setRemediosPublicoAlvo(Set<RemedioPublicoAlvo> remediosPublicoAlvo) {
+        this.remediosPublicoAlvo = remediosPublicoAlvo;
+    }
 }
