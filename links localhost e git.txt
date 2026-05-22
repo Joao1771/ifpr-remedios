@@ -14,3 +14,5 @@ git remote -v
 git fetch --all
 
 git pull origin developing
+
+git switch developing

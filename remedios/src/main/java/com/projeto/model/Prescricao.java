@@ -28,8 +28,19 @@ public class Prescricao {
     
     @Column(name = "VALIDADE", nullable = false)
     private String validade;
+    
+    @Column(name = "CONSERVACAO", nullable = false)
+    private String conservacao;
 
     // Getters e Setters
+
+    public String getConservacao() {
+      return conservacao;
+   }
+
+    public void setConservacao(String conservacao) {
+       this.conservacao = conservacao;
+    }
 
     public Integer getId() {
         return id;

@@ -16,6 +16,7 @@ public class RemedioDTO {
     public String composicao;
     public String efeitos;
     public String validade;
+    public String conservacao;
 
     // Relacionamentos
     public List<SubstanciaDTO> substancias;

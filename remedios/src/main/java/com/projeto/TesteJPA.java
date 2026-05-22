@@ -11,18 +11,23 @@ public class TesteJPA {
 
         EntityManager em = JPAUtil.getEntityManager();
 
+        em.getTransaction().begin();
+
+        // BUSCAR TARJA EXISTENTE
+        Tarjas t = em.find(Tarjas.class, 2); // Vermelha
+
+        // BUSCAR PÚBLICO ALVO EXISTENTE
+        PublicoAlvo pa = em.find(PublicoAlvo.class, 2); // Adultos
+
         // PRESCRIÇÃO
         Prescricao p = new Prescricao();
         p.setPublicoAlvo("Adultos");
-        p.setRestricao("Nenhuma");
-        p.setContraIndicacoes("Nenhuma");
+        p.setRestricao("Somente com receita");
+        p.setContraIndicacoes("Casos de suspeita de Dengue");
         p.setComposicao("Composição X");
-        p.setEfeitos("Efeito Y");
+        p.setEfeitos("Tontura e sono");
         p.setValidade("24 meses");
-
-        // TARJA
-        Tarjas t = new Tarjas();
-        t.setNome("Tarja Vermelha");
+        p.setConservacao("Ambiente seco e frio");
 
         // REMÉDIO
         Remedio r = new Remedio();
@@ -40,7 +45,7 @@ public class TesteJPA {
         // EMPRESA
         Empresa e = new Empresa();
         e.setNome("Farmacia Central");
-        e.setCnpj("12345678000199");
+        e.setCnpj("99999999000199");
         e.setCidade(c);
 
         // SUBSTÂNCIA
@@ -48,15 +53,8 @@ public class TesteJPA {
         s.setNome("Paracetamol Base");
         s.setTipo("Química");
 
-        // PÚBLICO ALVO
-        PublicoAlvo pa = new PublicoAlvo();
-        pa.setNome("Adultos");
-
-        em.getTransaction().begin();
-
-        // salvar entidades base
+        // SALVAR ENTIDADES
         em.persist(p);
-        em.persist(t);
         em.persist(r);
 
         em.persist(c);
@@ -64,9 +62,7 @@ public class TesteJPA {
 
         em.persist(s);
 
-        em.persist(pa);
-
-        em.flush(); // garante IDs
+        em.flush();
 
         // RELACIONAMENTO REMEDIO ↔ EMPRESA
         EmpresaRemedio er = new EmpresaRemedio();
