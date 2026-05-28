@@ -20,9 +20,17 @@ public class RemedioDAO {
         try {
             List<Remedio> lista = em.createQuery("""
                 SELECT DISTINCT r FROM Remedio r
-               LEFT JOIN FETCH r.prescricao	
+               LEFT JOIN FETCH r.prescricao
+               LEFT JOIN FETCH r.tarja
+               
+               LEFT JOIN FETCH r.remediosPublicoAlvo rpa
+               LEFT JOIN FETCH rpa.publicoAlvo
+               
                LEFT JOIN FETCH r.substanciasRemedios sr
                LEFT JOIN FETCH sr.substancia
+               
+               LEFT JOIN FETCH r.empresasRemedios er
+               LEFT JOIN FETCH er.empresa
             """, Remedio.class).getResultList();
 
             for (Remedio r : lista) {
@@ -36,12 +44,26 @@ public class RemedioDAO {
 
                // Prescrição
                if (r.getPrescricao() != null) {
-                   dto.publicoAlvo = r.getPrescricao().getPublicoAlvo();
-                   dto.restricao = r.getPrescricao().getRestricao();
-                   dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
-                   dto.composicao = r.getPrescricao().getComposicao();
-                   dto.efeitos = r.getPrescricao().getEfeitos();
-               }
+
+                  dto.restricao = r.getPrescricao().getRestricao();
+                  dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
+                  dto.efeitos = r.getPrescricao().getEfeitos();
+                  dto.validade = r.getPrescricao().getValidade();
+                  dto.conservacao = r.getPrescricao().getConservacao();
+              }
+               
+               if (r.getTarjas() != null) {
+                  dto.tarja = r.getTarjas().getNome();
+              }
+               
+               if (r.getRemediosPublicoAlvo() != null) {
+
+                  dto.publicoAlvo =
+                      r.getRemediosPublicoAlvo()
+                      .stream()
+                      .map(rpa -> rpa.getPublicoAlvo().getNome())
+                      .toList();
+              }
 
                // Substâncias (já carregadas com JOIN FETCH)
                if (r.getSubstanciasRemedios() != null) {
@@ -77,10 +99,16 @@ public class RemedioDAO {
 
        try {
            Remedio r = em.createQuery("""
-               SELECT r FROM Remedio r
+               SELECT DISTINCT r FROM Remedio r
                LEFT JOIN FETCH r.prescricao
+               LEFT JOIN FETCH r.tarja
+               
+               LEFT JOIN FETCH r.remediosPublicoAlvo rpa
+               LEFT JOIN FETCH rpa.publicoAlvo
+               
                LEFT JOIN FETCH r.substanciasRemedios sr
                LEFT JOIN FETCH sr.substancia
+               
                LEFT JOIN FETCH r.empresasRemedios er
                LEFT JOIN FETCH er.empresa
                WHERE r.id = :id
@@ -97,12 +125,25 @@ public class RemedioDAO {
 
            // Prescrição
            if (r.getPrescricao() != null) {
-               dto.publicoAlvo = r.getPrescricao().getPublicoAlvo();
-               dto.restricao = r.getPrescricao().getRestricao();
-               dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
-               dto.composicao = r.getPrescricao().getComposicao();
-               dto.efeitos = r.getPrescricao().getEfeitos();
+              dto.restricao = r.getPrescricao().getRestricao();
+              dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
+              dto.efeitos = r.getPrescricao().getEfeitos();
+              dto.validade = r.getPrescricao().getValidade();
+              dto.conservacao = r.getPrescricao().getConservacao();
            }
+           
+           if (r.getTarjas() != null) {
+              dto.tarja = r.getTarjas().getNome();
+          }
+           
+           if (r.getRemediosPublicoAlvo() != null) {
+
+              dto.publicoAlvo =
+                  r.getRemediosPublicoAlvo()
+                  .stream()
+                  .map(rpa -> rpa.getPublicoAlvo().getNome())
+                  .toList();
+          }
 
            // Substâncias
            if (r.getSubstanciasRemedios() != null) {
@@ -134,10 +175,16 @@ public class RemedioDAO {
 
        try {
            Remedio r = em.createQuery("""
-               SELECT r FROM Remedio r
+               SELECT DISTINCT r FROM Remedio r
                LEFT JOIN FETCH r.prescricao
+               LEFT JOIN FETCH r.tarja
+               
+               LEFT JOIN FETCH r.remediosPublicoAlvo rpa
+               LEFT JOIN FETCH rpa.publicoAlvo
+               
                LEFT JOIN FETCH r.substanciasRemedios sr
                LEFT JOIN FETCH sr.substancia
+               
                LEFT JOIN FETCH r.empresasRemedios er
                LEFT JOIN FETCH er.empresa
                WHERE r.id = :id
@@ -157,12 +204,39 @@ public class RemedioDAO {
            
 
            if (r.getPrescricao() != null) {
-               dto.publicoAlvo = r.getPrescricao().getPublicoAlvo();
-               dto.restricao = r.getPrescricao().getRestricao();
-               dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
-               dto.composicao = r.getPrescricao().getComposicao();
-               dto.efeitos = r.getPrescricao().getEfeitos();
+              dto.restricao = r.getPrescricao().getRestricao();
+              dto.contraIndicacoes = r.getPrescricao().getContraIndicacoes();
+              dto.efeitos = r.getPrescricao().getEfeitos();
+              dto.validade = r.getPrescricao().getValidade();
+              dto.conservacao = r.getPrescricao().getConservacao();
            }
+           
+           if (r.getTarjas() != null) {
+              dto.tarja = r.getTarjas().getNome();
+          }
+           
+           if (r.getRemediosPublicoAlvo() != null) {
+
+              dto.publicoAlvo =
+                  r.getRemediosPublicoAlvo()
+                  .stream()
+                  .map(rpa -> rpa.getPublicoAlvo().getNome())
+                  .toList();
+          }
+           
+           if (r.getSubstanciasRemedios() != null) {
+              dto.substancias = r.getSubstanciasRemedios()
+                  .stream()
+                  .map(sr -> new SubstanciaDTO(sr.getSubstancia()))
+                  .collect(java.util.stream.Collectors.toList());
+          }
+
+          if (r.getEmpresasRemedios() != null) {
+              dto.empresas = r.getEmpresasRemedios()
+                  .stream()
+                  .map(er -> er.getEmpresa().getNome())
+                  .toList();
+          }
 
            return dto;
 

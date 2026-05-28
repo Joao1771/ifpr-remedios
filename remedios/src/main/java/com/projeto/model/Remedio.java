@@ -32,7 +32,7 @@ public class Remedio {
 
     @ManyToOne
     @JoinColumn(name = "ID_TARJA")
-    private Tarjas Tarjas;
+    private Tarja tarja;
 
     @OneToMany(mappedBy = "remedio")
     @JsonIgnore
@@ -96,12 +96,12 @@ public class Remedio {
         this.prescricao = prescricao;
     }
 
-    public Tarjas getTarjas() {
-        return Tarjas;
+    public Tarja getTarjas() {
+        return tarja;
     }
 
-    public void setTarjas(Tarjas Tarjas) {
-        this.Tarjas = Tarjas;
+    public void setTarjas(Tarja tarja) {
+        this.tarja = tarja;
     }
 
     public Set<SubstanciaRemedio> getSubstanciasRemedios() {

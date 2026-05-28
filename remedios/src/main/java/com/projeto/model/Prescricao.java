@@ -11,17 +11,11 @@ public class Prescricao {
     @Column(name = "ID_PRESCRICAO")
     private Integer id;
 
-    @Column(name = "PUBLICO_ALVO", nullable = false)
-    private String publicoAlvo;
-
     @Column(name = "RESTRICAO", nullable = false)
     private String restricao;
 
     @Column(name = "CONTRA_INDICACOES", nullable = false)
     private String contraIndicacoes;
-
-    @Column(name = "COMPOSICAO")
-    private String composicao;
 
 	@Column(name = "EFEITOS", nullable = false)
     private String efeitos;
@@ -50,14 +44,6 @@ public class Prescricao {
 		return validade;
 	}
 
-	public String getPublicoAlvo() {
-        return publicoAlvo;
-    }
-
-    public void setPublicoAlvo(String publicoAlvo) {
-        this.publicoAlvo = publicoAlvo;
-    }
-
     public String getRestricao() {
         return restricao;
     }
@@ -77,14 +63,6 @@ public class Prescricao {
 
     public void setContraIndicacoes(String contraIndicacoes) {
         this.contraIndicacoes = contraIndicacoes;
-    }
-
-    public String getComposicao() {
-        return composicao;
-    }
-
-    public void setComposicao(String composicao) {
-        this.composicao = composicao;
     }
     
     public void setEfeitos(String efeitos) {

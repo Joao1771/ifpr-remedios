@@ -16,7 +16,7 @@ public class Empresa {
     @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "CNPJ", nullable = false)
+    @Column(name = "CNPJ", nullable = false, columnDefinition = "CHAR(14)", unique = true)
     private String cnpj;
 
     @ManyToOne

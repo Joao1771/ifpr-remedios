@@ -3,7 +3,7 @@ package com.projeto.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USUARIO")
+@Table(name = "USUARIOS")
 public class Usuario {
 
     @Id
@@ -17,8 +17,8 @@ public class Usuario {
     @Column(name = "TIPO", nullable = false)
     private String tipo;
 
-    @Column(name = "NOME", nullable = false)
-    private String nome;
+    @Column(name = "EMAIL", nullable = false)
+    private String email;
 
     // Getters e Setters
 
@@ -43,10 +43,10 @@ public class Usuario {
     }
 
     public String getNome() {
-        return nome;
+        return email;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.email = nome;
     }
 }

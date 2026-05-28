@@ -14,17 +14,15 @@ public class TesteJPA {
         em.getTransaction().begin();
 
         // BUSCAR TARJA EXISTENTE
-        Tarjas t = em.find(Tarjas.class, 2); // Vermelha
+        Tarja t = em.find(Tarja.class, 2); // Vermelha
 
         // BUSCAR PÚBLICO ALVO EXISTENTE
         PublicoAlvo pa = em.find(PublicoAlvo.class, 2); // Adultos
 
         // PRESCRIÇÃO
         Prescricao p = new Prescricao();
-        p.setPublicoAlvo("Adultos");
         p.setRestricao("Somente com receita");
         p.setContraIndicacoes("Casos de suspeita de Dengue");
-        p.setComposicao("Composição X");
         p.setEfeitos("Tontura e sono");
         p.setValidade("24 meses");
         p.setConservacao("Ambiente seco e frio");
@@ -32,7 +30,7 @@ public class TesteJPA {
         // REMÉDIO
         Remedio r = new Remedio();
         r.setNome("Paracetamol");
-        r.setBula("https://bula.com/paracetamol");
+        r.setBula("bulas/bula_exemplo.pdf");
         r.setTipo("G");
         r.setPrescricao(p);
         r.setTarjas(t);
@@ -64,19 +62,16 @@ public class TesteJPA {
 
         em.flush();
 
-        // RELACIONAMENTO REMEDIO ↔ EMPRESA
         EmpresaRemedio er = new EmpresaRemedio();
         er.setEmpresa(e);
         er.setRemedio(r);
         em.persist(er);
 
-        // RELACIONAMENTO REMEDIO ↔ SUBSTANCIA
         SubstanciaRemedio sr = new SubstanciaRemedio();
         sr.setRemedio(r);
         sr.setSubstancia(s);
         em.persist(sr);
 
-        // RELACIONAMENTO REMEDIO ↔ PUBLICO_ALVO
         RemedioPublicoAlvo rpa = new RemedioPublicoAlvo();
         rpa.setRemedio(r);
         rpa.setPublicoAlvo(pa);
