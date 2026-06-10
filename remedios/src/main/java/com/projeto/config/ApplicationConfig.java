@@ -9,7 +9,10 @@ public class ApplicationConfig extends ResourceConfig {
 
     public ApplicationConfig() {
 
-        packages("com.projeto.resource");
+        packages(
+              "com.projeto.resource",
+              "com.projeto.config"
+              );
 
         register(JacksonFeature.class);
     }

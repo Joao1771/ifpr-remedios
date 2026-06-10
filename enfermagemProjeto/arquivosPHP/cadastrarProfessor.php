@@ -1,3 +1,7 @@
+<?php
+//include("verificarSessao.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -24,7 +28,7 @@
 
 
     <form data-tipo="usuario"
-    action="/enfermagemProjeto/arquivosPHP/chamarFuncoes.php?acao=cadastroProfessor" method="post"
+    action="/enfermagemProjeto/arquivosPHP/chamarFuncoes.php?acao=cadastro" method="post"
       style="width: 100%; max-width: 500px;">
 
       <div id="bordaDosInputs">
@@ -52,7 +56,7 @@
           <p class="erros"></p>
 
         <label class="form-label">Nível de acesso</label>
-        <input type="text" value="professor" name="tipo" readonly class="form-control"
+        <input type="text" value="Professor" name="tipo" readonly class="form-control"
           style="margin-bottom:25px; height:45px; background-color:#e9ecef; color:#6c757d; cursor:not-allowed; border:1px solid #ced4da;">
 
 

@@ -26,7 +26,7 @@ public class Remedio {
     @JoinColumn(name = "ID_USUARIO")
     private Usuario usuario;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_PRESCRICAO")
     private Prescricao prescricao;
 
@@ -34,17 +34,17 @@ public class Remedio {
     @JoinColumn(name = "ID_TARJA")
     private Tarja tarja;
 
-    @OneToMany(mappedBy = "remedio")
-    @JsonIgnore
-    private Set<SubstanciaRemedio> substanciasRemedios;
-
-    @OneToMany(mappedBy = "remedio")
-    @JsonIgnore
-    private Set<EmpresaRemedio> empresasRemedios;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_SUBSTANCIA")
+    private Substancia substancia;
 
     @OneToMany(mappedBy = "remedio")
     @JsonIgnore
     private Set<RemedioPublicoAlvo> remediosPublicoAlvo;
+    
+    @ManyToOne
+    @JoinColumn(name = "ID_EMPRESA")
+    private Empresa empresa;
 
     // Getters e Setters
 
@@ -104,27 +104,26 @@ public class Remedio {
         this.tarja = tarja;
     }
 
-    public Set<SubstanciaRemedio> getSubstanciasRemedios() {
-        return substanciasRemedios;
-    }
-
-    public void setSubstanciasRemedios(Set<SubstanciaRemedio> substanciasRemedios) {
-        this.substanciasRemedios = substanciasRemedios;
-    }
-
-    public Set<EmpresaRemedio> getEmpresasRemedios() {
-        return empresasRemedios;
-    }
-
-    public void setEmpresaRemedios(Set<EmpresaRemedio> empresaRemedios) {
-        this.empresasRemedios = empresaRemedios;
-    }
-
     public Set<RemedioPublicoAlvo> getRemediosPublicoAlvo() {
         return remediosPublicoAlvo;
     }
 
     public void setRemediosPublicoAlvo(Set<RemedioPublicoAlvo> remediosPublicoAlvo) {
         this.remediosPublicoAlvo = remediosPublicoAlvo;
+    }
+    
+    public Substancia getSubstancia() {
+       return substancia;
+    }
+
+     public void setSubstancia(Substancia substancia) {
+        this.substancia = substancia;
+     }
+     public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 }

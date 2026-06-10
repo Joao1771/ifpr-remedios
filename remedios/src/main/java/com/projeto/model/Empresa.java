@@ -23,9 +23,6 @@ public class Empresa {
     @JoinColumn(name = "ID_CIDADE")
     private Cidade cidade;
 
-    @OneToMany(mappedBy = "empresa")
-    private List<EmpresaRemedio> empresasRemedios;
-
 
     public Integer getId() {
         return id;
@@ -54,12 +51,5 @@ public class Empresa {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-
-    public List<EmpresaRemedio> getEmpresasRemedios() {
-        return empresasRemedios;
-    }
-
-    public void setEmpresasRemedios(List<EmpresaRemedio> empresasRemedios) {
-        this.empresasRemedios = empresasRemedios;
-    }
+ 
 }

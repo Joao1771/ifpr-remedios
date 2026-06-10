@@ -1,3 +1,6 @@
+<?php
+//include("verificarSessao.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,30 +33,30 @@
 
         <tbody>
             <?php
-            include("conexaoBanco.php"); 
+            $url = "http://localhost:8080/remedios/api/remedios";
 
-            $sql = file_get_contents("../bancoDeDados/listarRemedios.sql");
+            $json = file_get_contents($url);
 
-            $result = $conn->query($sql);
+            $remedios = json_decode($json, true);
             
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
+            if (!empty($remedios)) {
+
+                foreach ($remedios as $row) {
                     echo "<tr>";
-                    echo "<td>". $row['NOME'] ."</td>";
-                    echo "<td><a href='". $row['BULA'] ."' target='_blank'>Ver Bula</a></td>";
-                    echo "<td>". $row['TIPO'] ."</td>";
-                    echo "<td>". $row['PUBLICO_ALVO'] ."</td>";
-                    echo "<td>". $row['RESTRICAO'] ."</td>";
-                    echo "<td>". $row['CONTRA_INDICACOES'] ."</td>";
-                    echo "<td>". $row['SUBSTANCIA'] ."</td>";
-                    echo "<td>". $row['EFEITOS'] ."</td>";
+                    echo "<td>". $row['nome'] ."</td>";
+                    echo "<td><a href='". $row['bula'] ."' target='_blank'>Ver Bula</a></td>";
+                    echo "<td>". $row['tipo'] ."</td>";
+                    echo "<td>". implode(", ", $row['publicoAlvo']) ."</td>";
+                    echo "<td>". $row['restricao'] ."</td>";
+                    echo "<td>". $row['contraIndicacoes'] ."</td>";
+                    echo "<td>". $row['substancia'] ."</td>";
+                    echo "<td>". $row['efeitos'] ."</td>";
                 }
             } else {
                 echo "<tr><td colspan='7' class='text-center'>Nenhum registro encontrado</td></tr>";
             }
 
-            $conn->close();
             ?>
         </tbody>
     </table>

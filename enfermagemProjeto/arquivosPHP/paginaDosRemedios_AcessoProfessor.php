@@ -1,5 +1,6 @@
 <?php
 include("conexaoBanco.php"); 
+//include("verificarSessao.php");
 ?>
 
 <!DOCTYPE html>
@@ -59,11 +60,10 @@ include("conexaoBanco.php");
                 <th>NOME</th>
                 <th>BULA</th>
                 <th>TIPO</th>
-                <th>PÚBLICO ALVO</th>
                 <th>RESTRIÇÃO</th>
                 <th>CONTRA INDICAÇÕES</th>
-                <th>SUBSTÂNCIAS</th>
                 <th>EFEITOS</th>
+                <th>VALIDADE</th>
                 <th>AÇÕES</th>
             </tr>
         </thead>
@@ -71,118 +71,100 @@ include("conexaoBanco.php");
         <tbody>
 
 <?php
+$url = "http://localhost:8080/remedios/api/remedios";
 
-$sql = file_get_contents("../bancoDeDados/listarRemedios.sql");
+$json = file_get_contents($url);
 
-$result = $conn->query($sql);
+$remedios = json_decode($json, true);
 
-if ($result->num_rows > 0) {
+if (!empty($remedios)) {
 
-    while ($row = $result->fetch_assoc()) {
+    foreach ($remedios as $row) {
 
-        $linkEditar = "editar.php?" .
+    $urlVerMais =
+        "verMais.php?id=" . $row['id'] .
+        "&tarja=" . urlencode($row['tarja']) .
+        "&substancia=" . urlencode($row['substancia']) .
+        "&substanciaTipo=" . urlencode($row['substanciaTipo']) .
+        "&publicoAlvo=" . urlencode(implode(", ", $row['publicoAlvo'] ?? [])) .
+        "&empresa=" . urlencode($row['empresa']) .
+        "&cnpj=" . urlencode($row['cnpj']) .
+        "&cidade=" . urlencode($row['cidade']) .
+        "&uf=" . urlencode($row['uf']) .
+        "&restricao=" . urlencode($row['restricao']) .
+        "&contraIndicacoes=" . urlencode($row['contraIndicacoes']) .
+        "&efeitos=" . urlencode($row['efeitos']) .
+        "&validade=" . urlencode($row['validade']) .
+        "&conservacao=" . urlencode($row['conservacao']);
 
-        "id=" . urlencode($row['ID_REMEDIO']) .
+    $urlEditar =
+        "editar.php?id=" . $row['id'] .
+        "&nome_paraAlterar=" . urlencode($row['nome']) .
+        "&bula_paraAlterar=" . urlencode($row['bula']) .
+        "&tipo_paraAlterar=" . urlencode($row['tipo']) .
+        "&restricao_paraAlterar=" . urlencode($row['restricao']) .
+        "&contraIndicacoes_paraAlterar=" . urlencode($row['contraIndicacoes']) .
+        "&efeitos_paraAlterar=" . urlencode($row['efeitos']) .
+        "&validade_paraAlterar=" . urlencode($row['validade']) .
+        "&conservacao_paraAlterar=" . urlencode($row['conservacao']) .
+        "&tarja_paraAlterar=" . urlencode($row['tarja']) .
+        "&substancia_paraAlterar=" . urlencode($row['substancia']) .
+        "&substancia_tipo_paraAlterar=" . urlencode($row['substanciaTipo']) .
+        "&publicoAlvo_paraAlterar=" . urlencode(implode(",", $row['publicoAlvo'] ?? [])) .
+        "&empresa_paraAlterar=" . urlencode($row['empresa']) .
+        "&cnpj_paraAlterar=" . urlencode($row['cnpj']) .
+        "&cidade_paraAlterar=" . urlencode($row['cidade']) .
+        "&uf_paraAlterar=" . urlencode($row['uf']);
 
-        "&nome=" . urlencode($row['NOME']) .
+    echo "<tr>";
 
-        "&bula=" . urlencode($row['BULA']) .
+    echo "<td>{$row['nome']}</td>";
 
-        "&tipo=" . urlencode($row['TIPO']) .
+    echo "<td>
+            <a href='/enfermagemProjeto/{$row['bula']}' target='_blank'>
+                Ver Bula
+            </a>
+          </td>";
 
-        "&publicoAlvo=" . urlencode($row['PUBLICO_ALVO']) .
+    echo "<td>{$row['tipo']}</td>";
+    echo "<td>{$row['restricao']}</td>";
+    echo "<td>{$row['contraIndicacoes']}</td>";
+    echo "<td>{$row['efeitos']}</td>";
+    echo "<td>{$row['validade']}</td>";
 
-        "&restricao=" . urlencode($row['RESTRICAO']) .
+    echo "<td>
 
-        "&contraIndicacoes=" . urlencode($row['CONTRA_INDICACOES']) .
-
-        "&efeitos=" . urlencode($row['EFEITOS']) .
-
-        "&empresa=" . urlencode($row['EMPRESA'] ?? '') .
-
-        "&cnpj=" . urlencode($row['CNPJ'] ?? '') .
-
-        "&cidade=" . urlencode($row['CIDADE'] ?? '') .
-
-        "&uf=" . urlencode($row['UF'] ?? '') .
-
-        "&substancia=" . urlencode($row['SUBSTANCIA'] ?? '') .
-
-        "&substancia_tipo=" . urlencode($row['SUBSTANCIA_TIPO'] ?? '') .
-
-        "&tarja=" . urlencode($row['TARJA'] ?? '') .
-
-        "&validade=" . urlencode($row['VALIDADE'] ?? '') .
-
-        "&conservacao=" . urlencode($row['CONSERVACAO'] ?? '');
-
-
-
-        echo "<tr>";
-
-        echo "<td>" . htmlspecialchars($row['NOME']) . "</td>";
-
-        echo "<td>
-                <a href='../"  . htmlspecialchars($row['BULA']) . "' target='_blank'>
-                    Ver Bula
-                </a>
-              </td>";
-
-        echo "<td>" . htmlspecialchars($row['TIPO']) . "</td>";
-
-        echo "<td>" . htmlspecialchars($row['PUBLICO_ALVO']) . "</td>";
-
-        echo "<td>" . htmlspecialchars($row['RESTRICAO']) . "</td>";
-
-        echo "<td>" . htmlspecialchars($row['CONTRA_INDICACOES']) . "</td>";
-
-        echo "<td>" . htmlspecialchars($row['SUBSTANCIA']) . "</td>";
-
-        echo "<td>" . htmlspecialchars($row['EFEITOS']) . "</td>";
-
-        echo "<td>
-
-            <a 
-                href='verMais.php?id=" . $row['ID_REMEDIO'] . "'
-                style='margin-right:10px;'
-                class='link-offset-2 link-underline link-underline-opacity-100'
-            >
+            <a href='{$urlVerMais}'
+               class='link-offset-2 link-underline link-underline-opacity-100'
+               style='margin-right:10px;'>
                 Ver Mais
             </a>
 
-            <a 
-                href='$linkEditar'
-                class='btn btn-warning'
-            >
+            <a href='{$urlEditar}'
+               class='btn btn-warning'>
                 Editar
             </a>
 
-            <a 
-                href='excluir.php?id=" . $row['ID_REMEDIO'] . "'
-                style='margin-left:20px; margin-right:5px;'
-                class='btn btn-danger'
-                onclick='return confirm(\"Deseja realmente excluir este remédio?\")'
-            >
+            <a href='excluir.php?id={$row['id']}'
+               class='btn btn-danger'
+               style='margin-left:20px;'>
                 Excluir
             </a>
 
-        </td>";
+          </td>";
 
-        echo "</tr>";
-    }
-
-} else {
+    echo "</tr>";
+    }}
+else {
 
     echo "
         <tr>
             <td colspan='9' class='text-center'>
-                Nenhum registro encontrado
+                Nenhum remédio encontrado
             </td>
         </tr>
     ";
 }
-
-$conn->close();
 ?>
 
         </tbody>

@@ -1,3 +1,7 @@
+<?php
+//include("verificarSessao.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -53,7 +57,7 @@ action="chamarFuncoes.php?acao=adicionar" method="post" enctype="multipart/form-
 </div>
 
 <div class="col-md-6 mb-2">
-<label class="form-label small" for="">
+<label class="form-label small" for="tipoRemedio">
   <span style="color:red">*</span>Tipo</label>
 <input name="tipoRemedio" class="form-control form-control-sm" id="tipoRemedio">
 <p class="text-danger small mb-0 erros"></p>
@@ -67,28 +71,28 @@ action="chamarFuncoes.php?acao=adicionar" method="post" enctype="multipart/form-
 
 <div class="col-6">
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="Crianças" id="criancas">
+  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="1" id="criancas">
   <label class="form-check-label">Crianças</label>
 </div>
 </div>
 
 <div class="col-6">
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="Adultos" id="adultos">
+  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="2" id="adultos">
   <label class="form-check-label">Adultos</label>
 </div>
 </div>
 
 <div class="col-6">
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="Idosos" id="idosos">
+  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="3" id="idosos">
   <label class="form-check-label">Idosos</label>
 </div>
 </div>
 
 <div class="col-6">
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="Gestantes" id="gestantes">
+  <input class="form-check-input" type="checkbox" name="publicoAlvo[]" value="4" id="gestantes">
   <label class="form-check-label">Gestantes</label>
 </div>
 </div>
@@ -138,9 +142,9 @@ action="chamarFuncoes.php?acao=adicionar" method="post" enctype="multipart/form-
     <select name="tarja" class="form-select form-select-sm" id="tarja">
 
         <option value="">Selecione a Tarja</option>
-        <option value="Sem tarja">Sem Tarja</option>
-        <option value="Vermelha">Vermelha</option>
-        <option value="Preta">Preta</option>
+        <option value="1">Sem Tarja</option>
+        <option value="2">Vermelha</option>
+        <option value="3">Preta</option>
 
     </select>
 
@@ -176,68 +180,77 @@ maxlength="100" placeholder="Ex: Local seco e refrigerado">
 
 </div>
 
+<div class="col-md-6 mb-2 position-relative">
+  
+
+
+    <label class="form-label small" for="empresaBusca">
+        <span style="color:red">*</span> Empresa
+    </label>
+
+<input
+    type="text"
+    id="empresaBusca"
+    class="form-control form-control-sm"
+    placeholder="Digite o nome da empresa">
+
+<input
+    type="hidden"
+    name="empresa"
+    id="empresa">
+
+<div
+    id="listaEmpresas"
+    class="list-group position-absolute"
+    style="z-index:1000; width:95%;">
+</div>
+
+<button
+    type="button"
+    id="trocarEmpresa"
+    class="btn btn-secondary btn-sm mt-2"
+    style="display:none;">
+    Trocar empresa
+</button>
+</div>
+
+
 <div class="col-md-6 mb-2">
-<label class="form-label small" for="empresa">
-  <span style="color:red">*</span>Nome</label>
-<input name="empresa" class="form-control form-control-sm" id="empresa">
+<label class="form-label small">CNPJ</label>
+
+<input
+    type="text"
+    id="cnpj"
+    class="form-control form-control-sm"
+    readonly>
+
 <p class="text-danger small mb-0 erros"></p>
 </div>
 
+
 <div class="col-md-6 mb-2">
-<label class="form-label small" for="cnpj">CNPJ</label>
-<input name="cnpj" class="form-control form-control-sm" id="cnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0001-00">
+<label class="form-label small">Cidade</label>
+
+<input
+    type="text"
+    id="cidade"
+    class="form-control form-control-sm"
+    readonly>
+
 <p class="text-danger small mb-0 erros"></p>
 </div>
 
+
 <div class="col-md-6 mb-2">
-<label class="form-label small" for="cidade">
-  <span style="color:red">*</span>Cidade</label>
-<input name="cidade" class="form-control form-control-sm" id="cidade">
+<label class="form-label small">Estado</label>
+
+<input
+    type="text"
+    id="uf"
+    class="form-control form-control-sm"
+    readonly>
+
 <p class="text-danger small mb-0 erros"></p>
-</div>
-
-<div class="col-md-6 mb-2">
-
-    <label class="form-label small" for="uf">
-      <span style="color:red">*</span>Estado</label>
-
-    <select name="uf" class="form-select form-select-sm" id="uf">
-
-        <option value="">Selecione um estado</option>
-        <option value="NULL">Fora do Brasil</option>
-
-        <option value="AC">Acre</option>
-        <option value="AL">Alagoas</option>
-        <option value="AP">Amapá</option>
-        <option value="AM">Amazonas</option>
-        <option value="BA">Bahia</option>
-        <option value="CE">Ceará</option>
-        <option value="DF">Distrito Federal</option>
-        <option value="ES">Espírito Santo</option>
-        <option value="GO">Goiás</option>
-        <option value="MA">Maranhão</option>
-        <option value="MT">Mato Grosso</option>
-        <option value="MS">Mato Grosso do Sul</option>
-        <option value="MG">Minas Gerais</option>
-        <option value="PA">Pará</option>
-        <option value="PB">Paraíba</option>
-        <option value="PR">Paraná</option>
-        <option value="PE">Pernambuco</option>
-        <option value="PI">Piauí</option>
-        <option value="RJ">Rio de Janeiro</option>
-        <option value="RN">Rio Grande do Norte</option>
-        <option value="RS">Rio Grande do Sul</option>
-        <option value="RO">Rondônia</option>
-        <option value="RR">Roraima</option>
-        <option value="SC">Santa Catarina</option>
-        <option value="SP">São Paulo</option>
-        <option value="SE">Sergipe</option>
-        <option value="TO">Tocantins</option>
-
-    </select>
-
-    <p class="text-danger small mb-0 erros"></p>
-
 </div>
 
 
@@ -249,6 +262,7 @@ maxlength="100" placeholder="Ex: Local seco e refrigerado">
 </div>
 
 <script src="../frontend/js/formValidation.js"></script>
+<script src="../frontend/js/empresasSearch.js"></script>
 <script src="../frontend/js/addValues.js"></script>
 </body>
 </html>

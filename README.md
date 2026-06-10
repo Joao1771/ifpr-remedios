@@ -1,6 +1,20 @@
 #  🇧🇷 Projeto Remédios 
 Associação com o curso de Enfermagem para o desenvolvimento de uma aplicação web e mobile para listar, adicionar e editar medicamentos. Feito em equipe com [Estevão](https://github.com/estevaofrancisco867), [Victor](https://github.com/VictorAkiyama) e João Otávio no IFPR Londrina.
 
+# Aviso: Se atentar com o login de conexaoBanco.php e o usuário utilizado no banco.
+## links de acesso:
+Acesso professor: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php
+
+Acesso aluno: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoAluno.php
+
+Cadastro: http://localhost/enfermagemProjeto/frontend/cadastro.html
+
+Mostrar pastas do projeto: https://localhost/enfermagemProjeto/
+
+Mostrar JSON da API: http://localhost:8080/remedios/api/remedios
+
+**(apertar Enter ao adicionar o remédio preencherá quase tudo automaticamente)**
+
 # Como importar o projeto no Eclipse
 Após fazer o download do arquivo **remedios.zip** e extrair, abrir o Eclipse ir em: File > Import... > Maven > Existing Maven Projects > Browse. Encontre o arquivo **remedios** e o selecione. Deixe o **pom.xml** marcado e clique em Finish.
 

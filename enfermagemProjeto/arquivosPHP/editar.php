@@ -1,3 +1,7 @@
+<?php
+//include("verificarSessao.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -42,19 +46,26 @@
                     </label>
 
                     <input name="nome_paraAlterar" id="nome" class="form-control form-control-sm" maxlength="100"
-                        value="<?php echo $_GET['nome']; ?>">
+                        value="<?php echo $_GET['nome_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
 
-                <input type="hidden" name="bulaAtual" value="<?php echo $_GET['bula']; ?>">
+                <input type="hidden" name="bulaAtual" value="<?php echo $_GET['bula_paraAlterar'] ?? ''; ?>">
 
                 <div class="col-md-6 mb-2">
-
-                    <label class="form-label small" for="bula"> Bula (PDF)
-                    </label>
-
-                    <input type="file" name="bula_paraAlterar" id="bula" class="form-control form-control-sm"
+                    <p class="small">
+                        Bula atual:
+                        <a href="/enfermagemProjeto/<?php echo $_GET['bula_paraAlterar'] ?? ''; ?>"                      
+                        target="_blank">
+                        Ver PDF
+                        </a>
+                    </p>
+                    <input
+                        type="file"
+                        name="bula_paraAlterar"
+                        id="bula"
+                        class="form-control form-control-sm"
                         accept="application/pdf">
 
                     <p class="text-danger small mb-0 erros"></p>
@@ -66,7 +77,7 @@
                     </label>
 
                     <input name="tipoRemedio_paraAlterar" id="tipoRemedio" class="form-control form-control-sm"
-                        value="<?php echo $_GET['tipo']; ?>">
+                        value="<?php echo $_GET['tipo_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
@@ -77,17 +88,20 @@
                     </label>
 
                     <?php
-$publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
+$publicos = explode(",", $_GET['publicoAlvo_paraAlterar']);
 ?>
 
                     <div class="row">
 
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="publicoAlvo_paraAlterar[]"
-                                    value="Crianças" id="criancas" <?php if(in_array("Crianças", $publicos))
-                                    echo "checked" ; ?>
-                                >
+                                <input
+    class="form-check-input"
+    type="checkbox"
+    name="publicoAlvo_paraAlterar[]"
+    value="1"
+    <?php if(in_array("Crianças", $publicos)) echo "checked"; ?>
+>
 
                                 <label class="form-check-label" for="criancas">
                                     Crianças
@@ -97,10 +111,13 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
 
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="publicoAlvo_paraAlterar[]"
-                                    value="Adultos" id="adultos" <?php if(in_array("Adultos", $publicos)) echo "checked"
-                                    ; ?>
-                                >
+                                <input
+    class="form-check-input"
+    type="checkbox"
+    name="publicoAlvo_paraAlterar[]"
+    value="2"
+    <?php if(in_array("Adultos", $publicos)) echo "checked"; ?>
+>
 
                                 <label class="form-check-label" for="adultos">
                                     Adultos
@@ -110,10 +127,13 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
 
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="publicoAlvo_paraAlterar[]"
-                                    value="Idosos" id="idosos" <?php if(in_array("Idosos", $publicos)) echo "checked" ;
-                                    ?>
-                                >
+                                <input
+    class="form-check-input"
+    type="checkbox"
+    name="publicoAlvo_paraAlterar[]"
+    value="3"
+    <?php if(in_array("Idosos", $publicos)) echo "checked"; ?>
+>
 
                                 <label class="form-check-label" for="idosos">
                                     Idosos
@@ -123,10 +143,13 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
 
                         <div class="col-6">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="publicoAlvo_paraAlterar[]"
-                                    value="Gestantes" id="gestantes" <?php if(in_array("Gestantes", $publicos))
-                                    echo "checked" ; ?>
-                                >
+                                <input
+    class="form-check-input"
+    type="checkbox"
+    name="publicoAlvo_paraAlterar[]"
+    value="4"
+    <?php if(in_array("Gestantes", $publicos)) echo "checked"; ?>
+>
 
                                 <label class="form-check-label" for="gestantes">
                                     Gestantes
@@ -145,7 +168,7 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
                     </label>
 
                     <input name="restricao_paraAlterar" id="restricao" class="form-control form-control-sm"
-                        value="<?php echo $_GET['restricao']; ?>">
+                        value="<?php echo $_GET['restricao_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
@@ -156,7 +179,7 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
 
                     <input name="contraIndicacoes_paraAlterar" id="contraIndicacoes"
                         class="form-control form-control-sm" maxlength="250"
-                        value="<?php echo $_GET['contraIndicacoes']; ?>">
+                        value="<?php echo $_GET['contraIndicacoes_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
@@ -166,7 +189,7 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
                     </label>
 
                     <input name="efeitos_paraAlterar" id="efeitos" class="form-control form-control-sm" maxlength="250"
-                        value="<?php echo $_GET['efeitos']; ?>">
+                        value="<?php echo $_GET['efeitos_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
@@ -176,7 +199,7 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
                     </label>
 
                     <input name="substancia_paraAlterar" class="form-control form-control-sm" id="substancia"
-                        maxlength="200" value="<?php echo $_GET['substancia']; ?>">
+                        maxlength="200" value="<?php echo $_GET['substancia_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
@@ -186,7 +209,7 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
                     </label>
 
                     <input name="substancia_tipo_paraAlterar" class="form-control form-control-sm" id="substancia_tipo"
-                        maxlength="100" value="<?php echo $_GET['substancia_tipo']; ?>">
+                        maxlength="100" value="<?php echo $_GET['substancia_tipo_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
@@ -199,18 +222,20 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
                     <select name="tarja_paraAlterar" class="form-select form-select-sm" id="tarja">
 
                         <option value="">Selecione a Tarja</option>
+<option value="1"
+<?php if($_GET['tarja_paraAlterar'] == "Sem Tarja") echo "selected"; ?>>
+Sem Tarja
+</option>
 
-                        <option value="Sem tarja" <?php if($_GET['tarja']=="Sem tarja" ) echo "selected" ; ?>>
-                            Sem Tarja
-                        </option>
+<option value="2"
+<?php if($_GET['tarja_paraAlterar'] == "Vermelha") echo "selected"; ?>>
+Vermelha
+</option>
 
-                        <option value="Vermelha" <?php if($_GET['tarja']=="Vermelha" ) echo "selected" ; ?>>
-                            Vermelha
-                        </option>
-
-                        <option value="Preta" <?php if($_GET['tarja']=="Preta" ) echo "selected" ; ?>>
-                            Preta
-                        </option>
+<option value="3"
+<?php if($_GET['tarja_paraAlterar'] == "Preta") echo "selected"; ?>>
+Preta
+</option>
 
                     </select>
 
@@ -223,7 +248,7 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
                     </label>
 
                     <input name="validade_paraAlterar" class="form-control form-control-sm" id="validade"
-                        maxlength="100" placeholder="em meses ou anos" value="<?php echo $_GET['validade']; ?>">
+                        maxlength="100" placeholder="em meses ou anos" value="<?php echo $_GET['validade_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
@@ -233,99 +258,115 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
                     </label>
 
                     <input name="conservacao_paraAlterar" class="form-control form-control-sm" id="conservacao"
-                        maxlength="100" placeholder="Ex: Local seco e refrigerado" value="<?php echo $_GET['conservacao']; ?>">
+                        maxlength="100" placeholder="Ex: Local seco e refrigerado" value="<?php echo $_GET['conservacao_paraAlterar']; ?>">
 
                     <p class="text-danger small mb-0 erros"></p>
                 </div>
 
-                <div class="d-flex align-items-center my-3">
+      <div class="d-flex align-items-center my-3">
 
-                    <div class="flex-grow-1 border-top"></div>
+    <div class="flex-grow-1 border-top"></div>
 
-                    <span class="px-3 fw-semibold text-warning">
-                        Dados da Empresa fabricante
-                    </span>
+    <span class="px-3 fw-semibold text-warning">
+        Dados da Empresa fabricante
+    </span>
 
-                    <div class="flex-grow-1 border-top"></div>
+    <div class="flex-grow-1 border-top"></div>
 
-                </div>
+</div>
 
-                <div class="col-md-6 mb-2">
-                    <label class="form-label small" for="empresa"> Nome
-                    </label>
 
-                    <input name="empresa_paraAlterar" class="form-control form-control-sm" id="empresa"
-                        value="<?php echo $_GET['empresa']; ?>">
+<div class="col-md-6 mb-2">
 
-                    <p class="text-danger small mb-0 erros"></p>
-                </div>
+    <label class="form-label small">
+        Empresa
+    </label>
 
-                <div class="col-md-6 mb-2">
-                    <label class="form-label small" for="cnpj"> CNPJ </label>
+    <select
+        name="empresa_paraAlterar"
+        class="form-select form-select-sm"
+        id="empresa">
 
-                    <input name="cnpj_paraAlterar" class="form-control form-control-sm" id="cnpj" inputmode="numeric"
-                        maxlength="18" placeholder="00.000.000/0001-00" value="<?php echo $_GET['cnpj']; ?>">
+        <option value="">Selecione uma empresa</option>
 
-                    <p class="text-danger small mb-0 erros"></p>
-                </div>
+        <option
+            value="1"
+            data-cnpj="11111111111111"
+            data-cidade="São Paulo"
+            data-uf="SP"
+            <?php if (($_GET['empresa_paraAlterar'] ?? '') == "EMS") echo "selected"; ?>>
+            EMS
+        </option>
 
-                <div class="col-md-6 mb-2">
-                    <label class="form-label small" for="cidade"> Cidade
-                    </label>
+        <option
+            value="2"
+            data-cnpj="22222222222222"
+            data-cidade="São Paulo"
+            data-uf="SP"
+            <?php if (($_GET['empresa_paraAlterar'] ?? '') == "Medley") echo "selected"; ?>>
+            Medley
+        </option>
 
-                    <input name="cidade_paraAlterar" class="form-control form-control-sm" id="cidade"
-                        value="<?php echo $_GET['cidade']; ?>">
+        <option
+            value="3"
+            data-cnpj="33333333333333"
+            data-cidade="São Paulo"
+            data-uf="SP"
+            <?php if (($_GET['empresa_paraAlterar'] ?? '') == "Eurofarma") echo "selected"; ?>>
+            Eurofarma
+        </option>
 
-                    <p class="text-danger small mb-0 erros"></p>
-                </div>
+    </select>
 
-                <div class="col-md-6 mb-2">
+    <p class="text-danger small mb-0 erros"></p>
 
-                    <label class="form-label small" for="uf"> Estado
-                    </label>
+</div>
 
-                    <select name="uf_paraAlterar" class="form-select form-select-sm" id="uf">
 
-                        <option value="">Selecione um estado</option>
+<div class="col-md-6 mb-2">
 
-                        <option value="NULL" <?php if($_GET['uf']=="NULL" ) echo "selected" ; ?>>
-                            Fora do Brasil
-                        </option>
+    <label class="form-label small">CNPJ</label>
 
-                        <option value="AC" <?php if($_GET['uf']=="AC" ) echo "selected" ; ?>>Acre</option>
-                        <option value="AL" <?php if($_GET['uf']=="AL" ) echo "selected" ; ?>>Alagoas</option>
-                        <option value="AP" <?php if($_GET['uf']=="AP" ) echo "selected" ; ?>>Amapá</option>
-                        <option value="AM" <?php if($_GET['uf']=="AM" ) echo "selected" ; ?>>Amazonas</option>
-                        <option value="BA" <?php if($_GET['uf']=="BA" ) echo "selected" ; ?>>Bahia</option>
-                        <option value="CE" <?php if($_GET['uf']=="CE" ) echo "selected" ; ?>>Ceará</option>
-                        <option value="DF" <?php if($_GET['uf']=="DF" ) echo "selected" ; ?>>Distrito Federal</option>
-                        <option value="ES" <?php if($_GET['uf']=="ES" ) echo "selected" ; ?>>Espírito Santo</option>
-                        <option value="GO" <?php if($_GET['uf']=="GO" ) echo "selected" ; ?>>Goiás</option>
-                        <option value="MA" <?php if($_GET['uf']=="MA" ) echo "selected" ; ?>>Maranhão</option>
-                        <option value="MT" <?php if($_GET['uf']=="MT" ) echo "selected" ; ?>>Mato Grosso</option>
-                        <option value="MS" <?php if($_GET['uf']=="MS" ) echo "selected" ; ?>>Mato Grosso do Sul</option>
-                        <option value="MG" <?php if($_GET['uf']=="MG" ) echo "selected" ; ?>>Minas Gerais</option>
-                        <option value="PA" <?php if($_GET['uf']=="PA" ) echo "selected" ; ?>>Pará</option>
-                        <option value="PB" <?php if($_GET['uf']=="PB" ) echo "selected" ; ?>>Paraíba</option>
-                        <option value="PR" <?php if($_GET['uf']=="PR" ) echo "selected" ; ?>>Paraná</option>
-                        <option value="PE" <?php if($_GET['uf']=="PE" ) echo "selected" ; ?>>Pernambuco</option>
-                        <option value="PI" <?php if($_GET['uf']=="PI" ) echo "selected" ; ?>>Piauí</option>
-                        <option value="RJ" <?php if($_GET['uf']=="RJ" ) echo "selected" ; ?>>Rio de Janeiro</option>
-                        <option value="RN" <?php if($_GET['uf']=="RN" ) echo "selected" ; ?>>Rio Grande do Norte
-                        </option>
-                        <option value="RS" <?php if($_GET['uf']=="RS" ) echo "selected" ; ?>>Rio Grande do Sul</option>
-                        <option value="RO" <?php if($_GET['uf']=="RO" ) echo "selected" ; ?>>Rondônia</option>
-                        <option value="RR" <?php if($_GET['uf']=="RR" ) echo "selected" ; ?>>Roraima</option>
-                        <option value="SC" <?php if($_GET['uf']=="SC" ) echo "selected" ; ?>>Santa Catarina</option>
-                        <option value="SP" <?php if($_GET['uf']=="SP" ) echo "selected" ; ?>>São Paulo</option>
-                        <option value="SE" <?php if($_GET['uf']=="SE" ) echo "selected" ; ?>>Sergipe</option>
-                        <option value="TO" <?php if($_GET['uf']=="TO" ) echo "selected" ; ?>>Tocantins</option>
+    <input
+        type="text"
+        id="cnpj"
+        class="form-control form-control-sm"
+        readonly>
 
-                    </select>
+    <p class="text-danger small mb-0 erros"></p>
 
-                    <p class="text-danger small mb-0 erros"></p>
+</div>
 
-                </div>
+
+<div class="col-md-6 mb-2">
+
+    <label class="form-label small">Cidade</label>
+
+    <input
+        type="text"
+        id="cidade"
+        class="form-control form-control-sm"
+        readonly>
+
+    <p class="text-danger small mb-0 erros"></p>
+
+</div>
+
+
+<div class="col-md-6 mb-2">
+
+    <label class="form-label small">Estado</label>
+
+    <input
+        type="text"
+        id="uf"
+        class="form-control form-control-sm"
+        readonly>
+
+    <p class="text-danger small mb-0 erros"></p>
+
+</div>
+
 
             </div>
 
@@ -337,6 +378,31 @@ $publicos = array_map('trim', explode(", ", $_GET['publicoAlvo']));
     </div>
 
     <script src="../frontend/js/formValidation.js"></script>
+    <script>
+
+(() => {
+
+    const selectEmpresa = document.getElementById("empresa");
+    const cnpj = document.getElementById("cnpj");
+    const cidade = document.getElementById("cidade");
+    const uf = document.getElementById("uf");
+
+    function atualizarEmpresa() {
+        const option =
+            selectEmpresa.options[
+                selectEmpresa.selectedIndex
+            ];
+
+        cnpj.value = option.dataset.cnpj || "";
+        cidade.value = option.dataset.cidade || "";
+        uf.value = option.dataset.uf || "";
+    }
+
+    selectEmpresa.addEventListener("change", atualizarEmpresa);
+    atualizarEmpresa();
+
+})();
+</script>
 </body>
 
 </html>

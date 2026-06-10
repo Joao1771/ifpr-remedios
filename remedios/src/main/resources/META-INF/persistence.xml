@@ -10,9 +10,7 @@
 		    <class>com.projeto.model.PublicoAlvo</class>
 		    <class>com.projeto.model.RemedioPublicoAlvo</class>
 		    <class>com.projeto.model.Empresa</class>
-		    <class>com.projeto.model.EmpresaRemedio</class>
 		    <class>com.projeto.model.Substancia</class>
-		    <class>com.projeto.model.SubstanciaRemedio</class>
 		    <class>com.projeto.model.Cidade</class>
 
         <properties>

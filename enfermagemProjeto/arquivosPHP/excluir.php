@@ -1,3 +1,7 @@
+<?php
+//include("verificarSessao.php");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

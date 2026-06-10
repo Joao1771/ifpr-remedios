@@ -18,10 +18,7 @@ $publicoAlvo = $_POST["publicoAlvo"] ?? [];
 $contraIndicacoes  = $_POST["contraIndicacoes"]?? null; 
 $efeitos  = $_POST["efeitos"]?? null; 
 $restricao  = $_POST["restricao"] ?? null;
-$empresa  = $_POST["empresa"]?? null ; 
-$cnpj  = $_POST["cnpj"]?? null; 
-$cidade  = $_POST["cidade"]?? null; 
-$uf = $_POST["uf"]?? null; 
+$idEmpresa  = $_POST["empresa"]?? null ; 
 $substancia  = $_POST["substancia"]?? null; 
 $substancia_tipo  = $_POST["substancia_tipo"]?? null; 
 $tarja = $_POST['tarja']?? null;
@@ -40,16 +37,9 @@ $tarja_paraAlterar = $_POST['tarja_paraAlterar']?? null;
 $validade_paraAlterar = $_POST['validade_paraAlterar']?? null; 
 $conservacao_paraAlterar = $_POST['conservacao_paraAlterar']?? null; 
 $empresa_paraAlterar = $_POST['empresa_paraAlterar'] ?? null; 
-$cnpj_paraAlterar = $_POST['cnpj_paraAlterar'] ?? null; 
-$cidade_paraAlterar = $_POST['cidade_paraAlterar'] ?? null; 
-$uf_paraAlterar = $_POST['uf_paraAlterar'] ?? null; 
 
 $substancia_paraAlterar = $_POST['substancia_paraAlterar'] ?? null; 
 $substancia_tipo_paraAlterar = $_POST['substancia_tipo_paraAlterar'] ?? null; 
-
-if ($uf === "NULL") { //adaptar UF para ser null no banco
-    $uf = null;
-}
 
 //salva o pdf da bula no arquivo bulas em htdocs e envia apenas o caminho para o banco
 if (isset($_FILES["bula"]) && $_FILES["bula"]["error"] === UPLOAD_ERR_OK) {
@@ -110,29 +100,28 @@ if (
 
 // Ação de login/cadastro
 if (isset($_GET["acao"]) && $_GET["acao"] === "login") {
-    logar($email, $senha);
+    logar($email, $senha, $conn);
 }
 
 // Ação de registro
 if (isset($_GET["acao"]) && $_GET["acao"] === "cadastro") {
-    cadastrar($email, $senha, $tipo);
+    cadastrar($email, $senha, $conn, $tipo);
 }
 if (isset($_GET["acao"]) && $_GET["acao"] === "cadastroProfessor") {
     cadastroProfessor($email, $senha, $conn, $tipo);
 }
 // Ação de adicionar mais remédios
 if (isset($_GET["acao"]) && $_GET["acao"] === "adicionar") {
-    adicionar($nome,$bula, $tipoRemedio, $publicoAlvo, $restricao, $contraIndicacoes, $efeitos,$empresa,$cnpj,$cidade,$uf,$substancia,$substancia_tipo,$tarja,
-$validade,$conservacao);
+    adicionar(
+    $conn,$nome,$bula,$tipoRemedio,$publicoAlvo,$restricao,$contraIndicacoes,$efeitos,$idEmpresa,$substancia,$substancia_tipo,$tarja,$validade,$conservacao);
 }
 if (isset($_GET["acao"]) && $_GET["acao"] === "editar") {
-    editar(
-    $id,$nome_paraAlterar,$bula_paraAlterar,$tipoRemedio_paraAlterar,$publicoAlvo_paraAlterar,$restricao_paraAlterar,$contraIndicacoes_paraAlterar,$efeitos_paraAlterar,
-    $empresa_paraAlterar,$substancia_paraAlterar,$substancia_tipo_paraAlterar,$tarja_paraAlterar,$validade_paraAlterar,$conservacao_paraAlterar
-);
+    editar($conn,$id,$nome_paraAlterar,$bula_paraAlterar,$tipoRemedio_paraAlterar,$publicoAlvo_paraAlterar,$restricao_paraAlterar,$contraIndicacoes_paraAlterar,$efeitos_paraAlterar,
+$empresa_paraAlterar,$substancia_paraAlterar,$substancia_tipo_paraAlterar,$tarja_paraAlterar,
+$validade_paraAlterar,$conservacao_paraAlterar);
 }
 
 if (isset($_GET["acao"]) && $_GET["acao"] === "excluir") {
-    excluir($id);
+    excluir($conn,$id);
 }
 ?>

@@ -3,9 +3,7 @@ package com.projeto.dao;
 import java.util.ArrayList;
 import java.util.List;
 import com.projeto.dto.RemedioDTO;
-import com.projeto.dto.SubstanciaDTO;
 import com.projeto.model.Remedio;
-import com.projeto.model.SubstanciaRemedio;
 import com.projeto.util.JPAUtil;
 
 import jakarta.persistence.EntityManager;
@@ -26,11 +24,10 @@ public class RemedioDAO {
                LEFT JOIN FETCH r.remediosPublicoAlvo rpa
                LEFT JOIN FETCH rpa.publicoAlvo
                
-               LEFT JOIN FETCH r.substanciasRemedios sr
-               LEFT JOIN FETCH sr.substancia
+               LEFT JOIN FETCH r.substancia
                
-               LEFT JOIN FETCH r.empresasRemedios er
-               LEFT JOIN FETCH er.empresa
+			   LEFT JOIN FETCH r.empresa e
+			   LEFT JOIN FETCH e.cidade
             """, Remedio.class).getResultList();
 
             for (Remedio r : lista) {
@@ -65,21 +62,21 @@ public class RemedioDAO {
                       .toList();
               }
 
-               // Substâncias (já carregadas com JOIN FETCH)
-               if (r.getSubstanciasRemedios() != null) {
-                  dto.substancias = r.getSubstanciasRemedios()
-                        .stream()
-                        .map((SubstanciaRemedio sr) -> new SubstanciaDTO(sr.getSubstancia()))
-                        .collect(java.util.stream.Collectors.toList());
-               }
+               if (r.getSubstancia() != null) {
+                  dto.substancia = r.getSubstancia().getNome();
+                  dto.substanciaTipo = r.getSubstancia().getTipo();
+              }
 
-               // Empresas (SEM JOIN FETCH → cuidado com LAZY)
-               if (r.getEmpresasRemedios() != null) {
-                   dto.empresas = r.getEmpresasRemedios()
-                       .stream()
-                       .map(er -> er.getEmpresa().getNome())
-                       .toList();
-               }
+               if (r.getEmpresa() != null) {
+
+            	    dto.empresa = r.getEmpresa().getNome();
+            	    dto.cnpj = r.getEmpresa().getCnpj();
+
+            	    if (r.getEmpresa().getCidade() != null) {
+            	        dto.cidade = r.getEmpresa().getCidade().getNome();
+            	        dto.uf = r.getEmpresa().getCidade().getUf();
+            	    }
+            	}
 
                dtoList.add(dto);
            }
@@ -106,11 +103,10 @@ public class RemedioDAO {
                LEFT JOIN FETCH r.remediosPublicoAlvo rpa
                LEFT JOIN FETCH rpa.publicoAlvo
                
-               LEFT JOIN FETCH r.substanciasRemedios sr
-               LEFT JOIN FETCH sr.substancia
+               LEFT JOIN FETCH r.substancia
                
-               LEFT JOIN FETCH r.empresasRemedios er
-               LEFT JOIN FETCH er.empresa
+			   LEFT JOIN FETCH r.empresa e
+			   LEFT JOIN FETCH e.cidade
                WHERE r.id = :id
            """, Remedio.class)
            .setParameter("id", id)
@@ -145,22 +141,22 @@ public class RemedioDAO {
                   .toList();
           }
 
-           // Substâncias
-           if (r.getSubstanciasRemedios() != null) {
-              dto.substancias = r.getSubstanciasRemedios()
-                    .stream()
-                    .map(sr -> new SubstanciaDTO(sr.getSubstancia()))
-                    .collect(java.util.stream.Collectors.toList());
-           }
+           if (r.getSubstancia() != null) {
+              dto.substancia = r.getSubstancia().getNome();
+              dto.substanciaTipo = r.getSubstancia().getTipo();
+          }
 
            // Empresas
-           if (r.getEmpresasRemedios() != null) {
-               dto.empresas = r.getEmpresasRemedios()
-                   .stream()
-                   .map(er -> er.getEmpresa().getNome())
-                   .toList();
-           }
+           if (r.getEmpresa() != null) {
 
+        	    dto.empresa = r.getEmpresa().getNome();
+        	    dto.cnpj = r.getEmpresa().getCnpj();
+
+        	    if (r.getEmpresa().getCidade() != null) {
+        	        dto.cidade = r.getEmpresa().getCidade().getNome();
+        	        dto.uf = r.getEmpresa().getCidade().getUf();
+        	    }
+        	}
        } catch (Exception e) {
            dto = null;
        } finally {
@@ -185,8 +181,9 @@ public class RemedioDAO {
                LEFT JOIN FETCH r.substanciasRemedios sr
                LEFT JOIN FETCH sr.substancia
                
-               LEFT JOIN FETCH r.empresasRemedios er
-               LEFT JOIN FETCH er.empresa
+               
+			   LEFT JOIN FETCH r.empresa e
+			   LEFT JOIN FETCH e.cidade
                WHERE r.id = :id
            """, Remedio.class)
            .setParameter("id", id)
@@ -224,19 +221,21 @@ public class RemedioDAO {
                   .toList();
           }
            
-           if (r.getSubstanciasRemedios() != null) {
-              dto.substancias = r.getSubstanciasRemedios()
-                  .stream()
-                  .map(sr -> new SubstanciaDTO(sr.getSubstancia()))
-                  .collect(java.util.stream.Collectors.toList());
+           if (r.getSubstancia() != null) {
+              dto.substancia = r.getSubstancia().getNome();
+              dto.substanciaTipo = r.getSubstancia().getTipo();
           }
 
-          if (r.getEmpresasRemedios() != null) {
-              dto.empresas = r.getEmpresasRemedios()
-                  .stream()
-                  .map(er -> er.getEmpresa().getNome())
-                  .toList();
-          }
+           if (r.getEmpresa() != null) {
+
+        	    dto.empresa = r.getEmpresa().getNome();
+        	    dto.cnpj = r.getEmpresa().getCnpj();
+
+        	    if (r.getEmpresa().getCidade() != null) {
+        	        dto.cidade = r.getEmpresa().getCidade().getNome();
+        	        dto.uf = r.getEmpresa().getCidade().getUf();
+        	    }
+        	}
 
            return dto;
 

@@ -27,6 +27,11 @@ public class TesteJPA {
         p.setValidade("24 meses");
         p.setConservacao("Ambiente seco e frio");
 
+        // SUBSTÂNCIA
+        Substancia s = new Substancia();
+        s.setNome("Paracetamol Base");
+        s.setTipo("Química");
+
         // REMÉDIO
         Remedio r = new Remedio();
         r.setNome("Paracetamol");
@@ -34,6 +39,7 @@ public class TesteJPA {
         r.setTipo("G");
         r.setPrescricao(p);
         r.setTarjas(t);
+        r.setSubstancia(s);
 
         // CIDADE
         Cidade c = new Cidade();
@@ -41,37 +47,21 @@ public class TesteJPA {
         c.setUf("PR");
 
         // EMPRESA
-        Empresa e = new Empresa();
-        e.setNome("Farmacia Central");
-        e.setCnpj("99999999000199");
-        e.setCidade(c);
+        Empresa e = em.find(Empresa.class, 1);
 
-        // SUBSTÂNCIA
-        Substancia s = new Substancia();
-        s.setNome("Paracetamol Base");
-        s.setTipo("Química");
+        r.setEmpresa(e);
 
         // SALVAR ENTIDADES
         em.persist(p);
+        em.persist(s);
         em.persist(r);
 
         em.persist(c);
         em.persist(e);
 
-        em.persist(s);
-
         em.flush();
 
-        EmpresaRemedio er = new EmpresaRemedio();
-        er.setEmpresa(e);
-        er.setRemedio(r);
-        em.persist(er);
-
-        SubstanciaRemedio sr = new SubstanciaRemedio();
-        sr.setRemedio(r);
-        sr.setSubstancia(s);
-        em.persist(sr);
-
+        // RELACIONAMENTO REMEDIO ↔ PUBLICO ALVO
         RemedioPublicoAlvo rpa = new RemedioPublicoAlvo();
         rpa.setRemedio(r);
         rpa.setPublicoAlvo(pa);

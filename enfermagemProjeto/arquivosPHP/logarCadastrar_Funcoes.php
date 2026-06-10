@@ -1,74 +1,114 @@
 <?php
 include "conexaoBanco.php";
 // Função de validação/login
-function logar($email, $senha, $conn){
+function logar($email, $senha)
+{
+    $dados = [
+        "email" => $email,
+        "senha" => md5(strtolower($email) . $senha)
+    ];
 
-    $senha = md5($senha);
+    $curl = curl_init("http://localhost:8080/remedios/api/usuarios/login");
 
-    $consultaLogin = $conn->prepare("
-        SELECT tipo 
-        FROM remedios_db.usuarios 
-        WHERE email = ? AND senha = ?
-    ");
+    curl_setopt_array($curl, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            "Content-Type: application/json"
+        ],
+        CURLOPT_POSTFIELDS => json_encode($dados)
+    ]);
 
-    $consultaLogin->bind_param("ss", $email, $senha);
-    $consultaLogin->execute();
-    $resultadoLogin = $consultaLogin->get_result();
+    $response = curl_exec($curl);
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-    if ($resultadoLogin->num_rows > 0) {
+    curl_close($curl);
 
-        $usuario = $resultadoLogin->fetch_assoc();
+    if ($httpCode == 200) {
+
+        $usuario = json_decode($response, true);
 
         if ($usuario['tipo'] === 'Aluno') {
+
             header("Location: /enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoAluno.php");
             exit;
+
         } else {
+
             header("Location: /enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php");
             exit;
         }
 
     } else {
+
         echo "<script>
             alert('Login não encontrado. Tente outro email/senha.');
-            window.location.href = '/enfermagemProjeto/frontend/login.html';
+            window.location.href='/enfermagemProjeto/frontend/login.html';
         </script>";
+
         exit;
     }
 }
 
 // Função de registro
-function cadastrar($email, $senha, $conn, $tipo){
+function cadastrar($email, $senha, $tipo)
+{
+    // Busca usuários existentes
+    $curl = curl_init("http://localhost:8080/remedios/api/usuarios");
 
-    $senha = md5($senha);
-    $consultaSQL = $conn->prepare("INSERT INTO remedios_db.usuarios(email, senha, tipo) VALUES (?, ?, ?)");
-    $consultaSQL->bind_param("sss", $email, $senha, $tipo);
+    curl_setopt_array($curl, [
+        CURLOPT_RETURNTRANSFER => true
+    ]);
 
-    $resultado = $consultaSQL->execute();
+    $response = curl_exec($curl);
+    curl_close($curl);
 
-  
-    if ($resultado === true) {
-        header("Location: /enfermagemProjeto/frontend/login.html");
-        exit;
-    } else {
-        echo "<script>alert('Não foi possível. Tente novamente');</script>";
-        exit;
+    $usuarios = json_decode($response, true);
+
+    foreach ($usuarios as $usuario) {
+
+        if ($usuario['email'] === $email) {
+
+            echo "<script>
+                alert('Este email já está cadastrado.');
+                history.back();
+            </script>";
+
+            exit;
+        }
     }
-}
 
-function cadastroProfessor($email, $senha, $conn, $tipo){
+    // Cadastra
+    $dados = [
+        "email" => $email,
+        "senha" => md5(strtolower($email) . $senha),
+        "tipo" => $tipo
+    ];
 
-    $senha = md5($senha);
-    $consultaSQL = $conn->prepare("INSERT INTO remedios_db.usuarios(email, senha, tipo) VALUES (?, ?, ?)");
-    $consultaSQL->bind_param("sss", $email, $senha, $tipo);
+    $curl = curl_init("http://localhost:8080/remedios/api/usuarios");
 
-    $resultado = $consultaSQL->execute();
+    curl_setopt_array($curl, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            "Content-Type: application/json"
+        ],
+        CURLOPT_POSTFIELDS => json_encode($dados)
+    ]);
 
-  
-    if ($resultado === true) {
-        header("Location: /enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php");
-        exit;
-    } else {
-        echo "<script>alert('Não foi possível. Tente novamente');</script>";
+    curl_exec($curl);
+
+    $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+    curl_close($curl);
+
+    if ($httpCode == 200 || $httpCode == 201) {
+        if ($tipo === "Professor") {
+            
+            header("Location: /enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php");
+        } else {
+            header("Location: /enfermagemProjeto/frontend/login.html");
+        }
         exit;
     }
 }
