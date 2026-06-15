@@ -3,13 +3,13 @@ Associação com o curso de Enfermagem para o desenvolvimento de uma aplicação
 
 # Aviso: Se atentar com o login de conexaoBanco.php e o usuário utilizado no banco.
 ## links de acesso:
-Acesso professor: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php
+Acesso professor/teacher: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php
 
-Acesso aluno: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoAluno.php
+Acesso aluno/student: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoAluno.php
 
-Cadastro: http://localhost/enfermagemProjeto/frontend/cadastro.html
+Cadastro/Sign up: http://localhost/enfermagemProjeto/frontend/cadastro.html
 
-Mostrar pastas do projeto: https://localhost/enfermagemProjeto/
+Mostrar pastas do projeto/Projects Folder: https://localhost/enfermagemProjeto/
 
 Mostrar JSON da API: http://localhost:8080/remedios/api/remedios
 

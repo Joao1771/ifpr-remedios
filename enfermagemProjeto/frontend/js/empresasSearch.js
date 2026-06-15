@@ -8,6 +8,7 @@ campoBusca.addEventListener("input", async () => {
 
     const texto = campoBusca.value.trim();
     botaoTrocar.style.display = "none";
+    campoEmpresa.value = "";
 
     if (texto.length < 2) {
 
@@ -41,12 +42,20 @@ campoBusca.addEventListener("input", async () => {
     campoBusca.value = empresa.nome;
     campoEmpresa.value = empresa.id;
 
+    document.getElementById("cnpj").value =
+        empresa.cnpj || "";
+
+    document.getElementById("cidade").value =
+        empresa.cidade || "";
+
+    document.getElementById("uf").value =
+        empresa.uf || "";
+
     campoBusca.readOnly = true;
 
     lista.innerHTML = "";
 
-    document.getElementById("trocarEmpresa")
-        .style.display = "inline-block";
+    botaoTrocar.style.display = "inline-block";
 });
 
         lista.appendChild(item);
@@ -59,6 +68,10 @@ botaoTrocar.addEventListener("click", () => {
 
     campoBusca.value = "";
     campoEmpresa.value = "";
+
+    document.getElementById("cnpj").value = "";
+    document.getElementById("cidade").value = "";
+    document.getElementById("uf").value = "";
 
     lista.innerHTML = "";
 

@@ -1,8 +1,14 @@
-Listar remédios: 
+Listar remédios (professor): 
 http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php
+
+Listar remédios (aluno): 
+http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoAluno.php
 
 Cadastro: 
 http://localhost/enfermagemProjeto/frontend/cadastro.html
+
+Mostrar pastas do projeto: 
+https://localhost/enfermagemProjeto/
 
 Listar com JSON da API REST: 
 http://localhost:8080/remedios/api/remedios
