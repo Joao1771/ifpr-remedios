@@ -28,8 +28,12 @@ function logar($email, $senha)
 
         $usuario = json_decode($response, true);
 
-        if ($usuario['tipo'] === 'Aluno') {
+        session_start();
 
+        $_SESSION["email"] = $usuario["email"];
+        $_SESSION["tipo"] = $usuario["tipo"];
+
+        if ($usuario['tipo'] === 'Aluno') {
             header("Location: /enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoAluno.php");
             exit;
 

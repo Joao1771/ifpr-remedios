@@ -161,7 +161,7 @@ function editar(
 
 function excluir($id)
 {
-    // 1. Buscar o remédio para obter a bula
+    // Buscar o remédio para obter a bula
     $urlBusca = "http://localhost:8080/remedios/api/remedios/" . $id;
 
     $ch = curl_init($urlBusca);
@@ -174,7 +174,7 @@ function excluir($id)
 
     $remedio = json_decode($response, true);
 
-    // 2. Apagar o PDF se existir
+    // Apagar o PDF do frontend se existir
     if (!empty($remedio['bula'])) {
 
         $caminhoFisico =
@@ -187,7 +187,7 @@ function excluir($id)
         }
     }
 
-    // 3. Excluir o remédio pela API
+    // Excluir o remédio pela API
     $urlDelete =
         "http://localhost:8080/remedios/api/remedios/" . $id;
 

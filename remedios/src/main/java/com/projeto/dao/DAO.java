@@ -6,6 +6,7 @@ import com.projeto.util.JPAUtil;
 
 import jakarta.persistence.EntityManager;
 
+// modelo DAO genérico.
 public abstract class DAO<T> {
 
     private Class<T> classe;

@@ -14,8 +14,6 @@ public class Tarja {
     @Column(name = "NOME", nullable = false, length = 30)
     private String nome;
 
-    // Getters e Setters
-
     public Integer getId() {
         return id;
     }

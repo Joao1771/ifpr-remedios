@@ -1,6 +1,6 @@
 <?php
 include("conexaoBanco.php"); 
-//include("verificarSessao.php");
+include("verificarSessao.php");
 ?>
 
 <!DOCTYPE html>

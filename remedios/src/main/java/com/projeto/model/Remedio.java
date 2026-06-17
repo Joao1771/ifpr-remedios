@@ -46,7 +46,6 @@ public class Remedio {
     @JoinColumn(name = "ID_EMPRESA")
     private Empresa empresa;
 
-    // Getters e Setters
 
     public Integer getId() {
         return id;

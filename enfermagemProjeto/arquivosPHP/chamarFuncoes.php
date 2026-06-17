@@ -38,11 +38,7 @@ $contraIndicacoes_paraAlterar  = $_POST["contraIndicacoes_paraAlterar"] ?? null;
 $efeitos_paraAlterar  = $_POST["efeitos_paraAlterar"] ?? null; 
 $tarja_paraAlterar = $_POST['tarja_paraAlterar']?? null; 
 $validade_paraAlterar = $_POST['validade_paraAlterar']?? null; 
-$conservacao_paraAlterar = $_POST['conservacao_paraAlterar']?? null; 
-$empresa_paraAlterar = $_POST['empresa_paraAlterar'] ?? null; 
-$cnpj_paraAlterar = $_POST['cnpj_paraAlterar'] ?? null; 
-$cidade_paraAlterar = $_POST['cidade_paraAlterar'] ?? null; 
-$uf_paraAlterar = $_POST['uf_paraAlterar'] ?? null; 
+$conservacao_paraAlterar = $_POST['conservacao_paraAlterar']?? null;
 
 $substancia_paraAlterar = $_POST['substancia_paraAlterar'] ?? null; 
 $substancia_tipo_paraAlterar = $_POST['substancia_tipo_paraAlterar'] ?? null; 
@@ -74,9 +70,9 @@ if (isset($_FILES["bula"]) && $_FILES["bula"]["error"] === UPLOAD_ERR_OK) {
 
     $bula = "bulas/" . $nomeFinal;
 }
-// EDITAR
-$bula_paraAlterar = $_POST["bulaAtual"] ?? null;
 
+// editar a bula
+$bula_paraAlterar = $_POST["bulaAtual"] ?? null;
 if (
     isset($_FILES["bula_paraAlterar"]) &&
     $_FILES["bula_paraAlterar"]["error"] === UPLOAD_ERR_OK
@@ -125,13 +121,14 @@ if (isset($_GET["acao"]) && $_GET["acao"] === "adicionar") {
     adicionar($nome,$bula, $tipoRemedio, $publicoAlvo, $restricao, $contraIndicacoes, $efeitos,$empresa,$cnpj,$cidade,$uf,$substancia,$substancia_tipo,$tarja,
 $validade,$conservacao);
 }
+// Ação de editar remédios
 if (isset($_GET["acao"]) && $_GET["acao"] === "editar") {
     editar(
     $id,$nome_paraAlterar,$bula_paraAlterar,$tipoRemedio_paraAlterar,$publicoAlvo_paraAlterar,$restricao_paraAlterar,$contraIndicacoes_paraAlterar,$efeitos_paraAlterar,
-    $empresa_paraAlterar,$substancia_paraAlterar,$substancia_tipo_paraAlterar,$tarja_paraAlterar,$validade_paraAlterar,$conservacao_paraAlterar
+    $empresa,$substancia_paraAlterar,$substancia_tipo_paraAlterar,$tarja_paraAlterar,$validade_paraAlterar,$conservacao_paraAlterar
 );
 }
-
+// Ação de excluir remédios
 if (isset($_GET["acao"]) && $_GET["acao"] === "excluir") {
     excluir($id);
 }

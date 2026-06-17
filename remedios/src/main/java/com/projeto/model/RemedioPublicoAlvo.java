@@ -19,7 +19,6 @@ public class RemedioPublicoAlvo {
     @JoinColumn(name = "ID_PUBLICO_ALVO")
     private PublicoAlvo publicoAlvo;
 
-    // Getters e Setters
 
     public int getId() {
         return id;

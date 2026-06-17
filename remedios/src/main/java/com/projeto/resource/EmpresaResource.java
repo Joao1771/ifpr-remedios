@@ -9,6 +9,7 @@ import com.projeto.dto.EmpresaDTO;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+// endpoint para pesquisa de empresas
 @Path("/empresas")
 @Produces(MediaType.APPLICATION_JSON)
 public class EmpresaResource {

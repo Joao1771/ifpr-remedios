@@ -26,8 +26,6 @@ public class Prescricao {
     @Column(name = "CONSERVACAO", nullable = false)
     private String conservacao;
 
-    // Getters e Setters
-
     public String getConservacao() {
       return conservacao;
    }

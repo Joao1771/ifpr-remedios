@@ -9,12 +9,11 @@
     tarja: "2",
     validade: "24 meses",
     conservacao: "Local seco e refrigerado",
-
     empresa: "1"
 };
 document.addEventListener("keyup", e => {
 
-    if (e.key !== "Enter") return;
+    if (e.key !== "Ç") return;
     
     // Preenche inputs e selects
     Object.entries(dados).forEach(([id, valor]) => {
@@ -27,12 +26,11 @@ document.addEventListener("keyup", e => {
         
             campo.value = valor;
 
-            // dispara eventos para selects
             campo.dispatchEvent(new Event("change"));
         }
     });
 
-    // Público-alvo
+    // Preenche público-alvo com crianças e adultos
     ["criancas", "adultos"].forEach(id => {
 
         const checkbox = document.getElementById(id);

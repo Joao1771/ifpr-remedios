@@ -1,5 +1,5 @@
 <?php
-//include("verificarSessao.php");
+include("verificarSessao.php");
 ?>
 
 <!DOCTYPE html>
@@ -276,50 +276,42 @@ Preta
 </div>
 
 
-<div class="col-md-6 mb-2">
 
-    <label class="form-label small">
-        Empresa
+
+<div class="col-md-6 mb-2 position-relative">
+  
+
+
+    <label class="form-label small" for="empresaBusca">
+        <span style="color:red">*</span> Empresa
     </label>
 
-    <select
-        name="empresa_paraAlterar"
-        class="form-select form-select-sm"
-        id="empresa">
+<input
+    type="text"
+    id="empresaBusca"
+    value="<?php echo $_GET['empresa_paraAlterar']; ?>"
+    class="form-control form-control-sm"
+    placeholder="Digite o nome da empresa"
+    readonly>
 
-        <option value="">Selecione uma empresa</option>
+<input
+    type="hidden"
+    name="empresa"
+    id="empresa">
 
-        <option
-            value="1"
-            data-cnpj="11111111111111"
-            data-cidade="São Paulo"
-            data-uf="SP"
-            <?php if (($_GET['empresa_paraAlterar'] ?? '') == "EMS") echo "selected"; ?>>
-            EMS
-        </option>
+<div
+    id="listaEmpresas"
+    class="list-group position-absolute"
+    style="z-index:1000; width:95%;">
+</div>
 
-        <option
-            value="2"
-            data-cnpj="22222222222222"
-            data-cidade="São Paulo"
-            data-uf="SP"
-            <?php if (($_GET['empresa_paraAlterar'] ?? '') == "Medley") echo "selected"; ?>>
-            Medley
-        </option>
-
-        <option
-            value="3"
-            data-cnpj="33333333333333"
-            data-cidade="São Paulo"
-            data-uf="SP"
-            <?php if (($_GET['empresa_paraAlterar'] ?? '') == "Eurofarma") echo "selected"; ?>>
-            Eurofarma
-        </option>
-
-    </select>
-
-    <p class="text-danger small mb-0 erros"></p>
-
+<button
+    type="button"
+    id="trocarEmpresa"
+    class="btn btn-secondary btn-sm mt-2"
+    style="display:inline-block;">
+    Trocar empresa
+</button>
 </div>
 
 
@@ -331,6 +323,7 @@ Preta
         type="text"
         id="cnpj"
         class="form-control form-control-sm"
+        value="<?php echo $_GET['cnpj_paraAlterar']; ?>"
         readonly>
 
     <p class="text-danger small mb-0 erros"></p>
@@ -346,6 +339,7 @@ Preta
         type="text"
         id="cidade"
         class="form-control form-control-sm"
+        value="<?php echo $_GET['cidade_paraAlterar']; ?>"
         readonly>
 
     <p class="text-danger small mb-0 erros"></p>
@@ -361,6 +355,7 @@ Preta
         type="text"
         id="uf"
         class="form-control form-control-sm"
+        value="<?php echo $_GET['uf_paraAlterar']; ?>"
         readonly>
 
     <p class="text-danger small mb-0 erros"></p>
@@ -378,31 +373,7 @@ Preta
     </div>
 
     <script src="../frontend/js/formValidation.js"></script>
-    <script>
-
-(() => {
-
-    const selectEmpresa = document.getElementById("empresa");
-    const cnpj = document.getElementById("cnpj");
-    const cidade = document.getElementById("cidade");
-    const uf = document.getElementById("uf");
-
-    function atualizarEmpresa() {
-        const option =
-            selectEmpresa.options[
-                selectEmpresa.selectedIndex
-            ];
-
-        cnpj.value = option.dataset.cnpj || "";
-        cidade.value = option.dataset.cidade || "";
-        uf.value = option.dataset.uf || "";
-    }
-
-    selectEmpresa.addEventListener("change", atualizarEmpresa);
-    atualizarEmpresa();
-
-})();
-</script>
+    <script src="../frontend/js/empresasSearch.js"></script>
 </body>
 
 </html>

@@ -13,6 +13,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+// endpoint para CRUD Remedios
 @Path("/remedios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -20,13 +21,13 @@ public class RemedioResource {
 
     private RemedioDAO dao = new RemedioDAO();
 
-    // LISTAR TODOS
+    //Read
     @GET
     public List<RemedioDTO> listar() {
         return dao.listar();
     }
 
-    // BUSCAR POR ID
+    // Read (id)
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") int id) {
@@ -43,7 +44,7 @@ public class RemedioResource {
         return Response.ok(dto).build();
     }
 
-    // SALVAR
+    // Create
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -131,7 +132,7 @@ public class RemedioResource {
         }
     }
     
-    // ATUALIZAR
+    // Update
     @PUT
     @Path("/{id}")
     public Response atualizar(@PathParam("id") int id,
@@ -150,21 +151,19 @@ public class RemedioResource {
                         .entity("Remédio não encontrado")
                         .build();
             }
-
-            // Dados básicos
             remedio.setNome(dto.nome);
             remedio.setBula(dto.bula);
             remedio.setTipo(dto.tipo);
 
-            // Empresa
+            
             Empresa empresa = em.find(Empresa.class, dto.idEmpresa);
             remedio.setEmpresa(empresa);
 
-            // Tarja
+           
             Tarja tarja = em.find(Tarja.class, dto.idTarja);
             remedio.setTarjas(tarja);
 
-            // Substância
+            
             Substancia substancia = new Substancia();
 
             substancia.setNome(dto.substancia);
@@ -174,7 +173,7 @@ public class RemedioResource {
 
             remedio.setSubstancia(substancia);
 
-            // Prescrição
+            
             Prescricao p = remedio.getPrescricao();
 
             if (p == null) {
@@ -189,7 +188,7 @@ public class RemedioResource {
             p.setValidade(dto.validade);
             p.setConservacao(dto.conservacao);
 
-            // Remove públicos antigos
+   
             em.createQuery("""
                 DELETE FROM RemedioPublicoAlvo rpa
                 WHERE rpa.remedio.id = :id
@@ -197,7 +196,6 @@ public class RemedioResource {
             .setParameter("id", id)
             .executeUpdate();
 
-            // Cria os novos públicos
             if (dto.idPublicoAlvo != null) {
 
                 for (Integer idPublico : dto.idPublicoAlvo) {
@@ -241,7 +239,7 @@ public class RemedioResource {
         }
     }
 
-    // DELETAR
+    // Delete
     @DELETE
     @Path("/{id}")
     public Response deletar(@PathParam("id") int id) {

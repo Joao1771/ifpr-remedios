@@ -1,7 +1,6 @@
 #  🇧🇷 Projeto Remédios 
 Associação com o curso de Enfermagem para o desenvolvimento de uma aplicação web e mobile para listar, adicionar e editar medicamentos. Feito em equipe com [Estevão](https://github.com/estevaofrancisco867), [Victor](https://github.com/VictorAkiyama) e João Otávio no IFPR Londrina.
 
-# Aviso: Se atentar com o login de conexaoBanco.php e o usuário utilizado no banco.
 ## links de acesso:
 Acesso professor/teacher: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php
 

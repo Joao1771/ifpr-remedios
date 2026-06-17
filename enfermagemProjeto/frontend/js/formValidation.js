@@ -26,6 +26,8 @@ const form = document.querySelector("form");
 const erroVazio = "Por favor, preencha este campo.";
 const erroURL = "Digite uma URL válida (ex: https://site.com)";
 const erroGrande = "O tamanho máximo permitido é de 200 caracteres.";
+const formEmailCadastro = document.getElementsByTagName("form")[0];
+const tiposLogin = ["@gmail", "@escola", "@ifpr",];
 
 function clearErrors() {
     erros.forEach(p => p.innerHTML = "");
@@ -63,29 +65,86 @@ function verifyCampo(campo, mensagem = erroVazio) {
 
     return false;
 }
-function verifyEmail() {
+formEmailCadastro.addEventListener("submit", function (e) {
+    // limpa erros
+    erros[0].innerHTML = "";
+    erros[1].innerHTML = "";
 
-    if (!email) return false;
+    let temMaiuscula = false;
+    let temNumero = false;
+    let temErro = false;
 
-    const erroElemento = email.nextElementSibling;
+    function nomeDominioEmail(emailTexto) {
+        const partes = emailTexto.split("@");
 
-    if (verifyCampo(email)) return true;
+        if (partes.length < 2) {
+            return "";
+        }
 
-    const emailValue = email.value.trim().toLowerCase();
+        const dominio = partes[1];
+        const nomeDominio = dominio.split(".")[0];
 
-    const regex =
-        /^[a-zA-Z0-9._%+-]+@((gmail|outlook|hotmail|email)\.com(\.br)?|ifpr\.edu\.br)$/;
-
-    if (!regex.test(emailValue)) {
-
-        erroElemento.innerHTML =
-            "Use apenas gmail, outlook, hotmail, email ou ifpr.edu.br";
-
-        return true;
+        return "@" + nomeDominio;
     }
 
-    return false;
-}
+    let nomeDominio = nomeDominioEmail(email.value);
+
+    let dominioPermitido = false;
+
+    for (let indice = 0; indice < tiposLogin.length; indice++) {
+        if (tiposLogin[indice] === nomeDominio) {
+            dominioPermitido = true;
+            break;
+        }
+    }
+
+    if (!dominioPermitido && email.value !== "") {
+        erros[0].innerHTML = "Use apenas gmail, outlook, hotmail, email ou ifpr.edu.br";
+        temErro = true;
+    }
+
+    if (email.value === "") {
+        erros[0].innerHTML = "Digite o e-mail";
+        temErro = true;
+    }
+
+    for (let i = 0; i < senha.value.length; i++) {
+        let caractere = senha.value[i];
+
+        if (caractere >= "A" && caractere <= "Z") {
+            temMaiuscula = true;
+        }
+
+        if (caractere >= "0" && caractere <= "9") {
+            temNumero = true;
+        }
+    }
+
+    if (!temMaiuscula || !temNumero) {
+        erros[1].innerHTML = "A senha deve ter pelo menos uma letra maiúscula e um número";
+        temErro = true;
+    }
+
+    if (senha.value === "") {
+        erros[1].innerHTML = "Digite a senha";
+        temErro = true;
+    }
+
+    if (senha.value.length > 30) {
+        erros[1].innerHTML = "Senha deve ter no máximo 30 caracteres";
+        temErro = true;
+    }
+
+    if (senha.value.length < 6 && senha.value !== "") {
+        erros[1].innerHTML = "Senha deve ter pelo menos 6 caracteres";
+        temErro = true;
+    }
+
+    // bloqueia envio se tiver erro
+    if (temErro) {
+        e.preventDefault();
+    }
+});
 
 function verifySenha() {
 
@@ -159,39 +218,6 @@ function verifyPublicoAlvo() {
     return false;
 }
 
-function verifyCNPJ() {
-
-    if (!cnpj) return false;
-
-    const erroElemento = cnpj.parentElement.querySelector(".erros");
-
-    const somenteNumeros = cnpj.value.replace(/\D/g, "");
-
-    if (somenteNumeros.length !== 14 && somenteNumeros.length !== 0) {
-        erroElemento.innerHTML = "CNPJ deve conter 14 números.";
-        return true;
-    }
-
-    return false;
-}
-
-function verifyUF() {
-
-    if (!uf) return false;
-
-    const erroElemento = uf.parentElement.querySelector(".erros");
-
-    if (verifyCampo(uf)) return true;
-
-    if(uf.value === "NULL") return false;
-    if (uf.value.length !== 2) {
-        erroElemento.innerHTML = "UF deve conter 2 letras.";
-        return true;
-    }
-
-    return false;
-}
-
 function validarLogin() {
 
     form.addEventListener("submit", e => {
@@ -239,9 +265,9 @@ function validarRemedio() {
             verifyCampo(composicao),
             verifyCampo(efeitos),
             verifyCampo(empresa),
-            verifyCNPJ(),
+            verifyCampo(uf),
             verifyCampo(cidade),
-            verifyUF(),
+            verifyCampo(cnpj),
             verifyCampo(substancia),
             verifyCampo(substanciaTipo),
             verifyCampo(tarja),
