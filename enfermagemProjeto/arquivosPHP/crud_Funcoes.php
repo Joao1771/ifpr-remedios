@@ -1,5 +1,4 @@
 <?php
-include "conexaoBanco.php";
 
 // Função de registro
 function adicionar(

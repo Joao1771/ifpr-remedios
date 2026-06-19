@@ -1,5 +1,10 @@
 <?php
 include("verificarSessao.php");
+
+if ($_SESSION["tipo"] !== "Professor" ) {
+    header("Location: /enfermagemProjeto/frontend/login.html");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

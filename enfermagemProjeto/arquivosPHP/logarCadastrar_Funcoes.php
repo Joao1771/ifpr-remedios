@@ -1,5 +1,4 @@
 <?php
-include "conexaoBanco.php";
 // Função de validação/login
 function logar($email, $senha)
 {
@@ -82,7 +81,7 @@ function cadastrar($email, $senha, $tipo)
         }
     }
 
-    // Cadastra
+    // Cadastra, mandando POST para API
     $dados = [
         "email" => $email,
         "senha" => md5(strtolower($email) . $senha),

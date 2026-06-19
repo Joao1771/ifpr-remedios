@@ -12,7 +12,7 @@ Mostrar pastas do projeto/Projects Folder: https://localhost/enfermagemProjeto/
 
 Mostrar JSON da API: http://localhost:8080/remedios/api/remedios
 
-**(apertar Enter ao adicionar o remédio preencherá quase tudo automaticamente)**
+_(apertar Ç ao adicionar o remédio preencherá quase tudo automaticamente para testes)_
 
 # Como importar o projeto no Eclipse
 Após fazer o download do arquivo **remedios.zip** e extrair, abrir o Eclipse ir em: File > Import... > Maven > Existing Maven Projects > Browse. Encontre o arquivo **remedios** e o selecione. Deixe o **pom.xml** marcado e clique em Finish.
@@ -22,10 +22,8 @@ Abrir o **remedios_db.sql** no MySQL, descomentar a linha 5: `CREATE USER`... pa
 
 Em seguida, execute o script para configurar o banco de dados (um usuário de teste será criado para realizar login na aplicação).
 
-Observe que o usuário do banco de dados deve ser o mesmo definido no arquivo `persistence.xml` do projeto **remedios.zip** Caso você altere o usuário do banco, será necessário atualizá-lo tanto no `persistence.xml` quanto no **remedios_db.sql**.
+Observe que o usuário do banco de dados deve ser o mesmo definido no arquivo `persistence.xml` e que a senha deve ser definida do projeto **remedios.zip** Caso você altere o usuário do banco, será necessário atualizá-lo tanto no `persistence.xml` quanto no **remedios_db.sql**.
 
-# Como inserir valores usando o projeto
-No Eclipse, vá nas pastas dentro do projeto **remedios:** Java Resources/src/main/java/com.projeto e, clicando com o botão direito no **TesteJPA.java**, vá em Run As > Java Aplication. Depois das INFOS e dos WARNINGS, deve aparecer no console a mensagem: `Salvo com relacionamento!`. Assim vão ser inseridos alguns valores nas tabelas REMEDIO e DESCRICAO.
 
 # Como executar o servidor Apache Tomcat no Eclipse
 Primeiro, certifique-se da aba **Servers** estar aparecendo no Eclipse, se não estiver, vá em Window > Show View > Other e pesquise Servers.
@@ -46,11 +44,8 @@ Open **remedios_db.sql** in MySQL and uncomment line 5 (CREATE USER...) to creat
 
 Then execute the script to set up the database (a test user will be created for logging into the application).
 
-Note that the database user must match the one defined in the `persistence.xml` file of the **remedios.zip** project. If you change the database user, you must also update it in both `persistence.xml` and **remedios_db.sql**.
+Note that the database user and password must match the one defined in the `persistence.xml` file of the **remedios.zip** project. If you change the database user, you must also update it in both `persistence.xml` and **remedios_db.sql**.
 
-# How to insert values using the project
-
-In Eclipse, navigate through the project folders **remedios**: Java Resources/src/main/java/com.projeto and, by right-clicking on **TesteJPA.java**, go to Run As > Java Application. After the INFO and WARNING messages, the following message should appear in the console: `Salvo com relacionamento!`. This means that some values have been inserted into the REMEDIO and DESCRICAO tables.
 
 # How to Run the Apache Tomcat Server
 First, make sure the **Servers** tab is visible in Eclipse. If it is not, go to Window > Show View > Other and search for "Servers".  

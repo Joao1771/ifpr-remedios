@@ -17,10 +17,12 @@ include("verificarSessao.php");
 
 <div class="container py-5">
 
-    <a href="paginaDosRemedios_AcessoProfessor.php"
-       class="btn btn-outline-danger mb-4">
-        Voltar
-    </a>
+<a href="<?=
+    $_SESSION['tipo'] === 'Professor' ? 'paginaDosRemedios_AcessoProfessor.php' : 'paginaDosRemedios_AcessoAluno.php'
+?>"
+class="btn btn-outline-danger mb-4">
+    Voltar
+</a>
 
     <div class="card shadow-sm border-0 rounded-4">
 

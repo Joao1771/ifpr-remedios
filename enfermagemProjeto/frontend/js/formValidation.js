@@ -26,15 +26,11 @@ const form = document.querySelector("form");
 const erroVazio = "Por favor, preencha este campo.";
 const erroURL = "Digite uma URL válida (ex: https://site.com)";
 const erroGrande = "O tamanho máximo permitido é de 200 caracteres.";
-const formEmailCadastro = document.getElementsByTagName("form")[0];
+const formEmailCadastro = document.querySelector("#usuario");
 const tiposLogin = ["@gmail", "@escola", "@ifpr",];
 
 function clearErrors() {
     erros.forEach(p => p.innerHTML = "");
-}
-
-function isValidURL(value) {
-    return /^(https?:\/\/)[^\s$.?#].[^\s]*$/.test(value);
 }
 
 function verifyCampo(campo, mensagem = erroVazio) {
@@ -65,11 +61,12 @@ function verifyCampo(campo, mensagem = erroVazio) {
 
     return false;
 }
+if (formEmailCadastro && senha) {
 formEmailCadastro.addEventListener("submit", function (e) {
     // limpa erros
     erros[0].innerHTML = "";
     erros[1].innerHTML = "";
-
+alert()
     let temMaiuscula = false;
     let temNumero = false;
     let temErro = false;
@@ -145,6 +142,7 @@ formEmailCadastro.addEventListener("submit", function (e) {
         e.preventDefault();
     }
 });
+}
 
 function verifySenha() {
 
@@ -233,21 +231,6 @@ function validarLogin() {
     });
 }
 
-function validarUsuario() {
-
-    form.addEventListener("submit", e => {
-
-        clearErrors();
-
-        const emailErro = verifyEmail();
-        const senhaErro = verifySenha();
-
-        if (emailErro || senhaErro) {
-            e.preventDefault();
-        }
-    });
-}
-
 function validarRemedio() {
 
     form.addEventListener("submit", e => {
@@ -286,10 +269,6 @@ if (form) {
 
     if (tipo === "login") {
         validarLogin();
-    }
-
-    if (tipo === "usuario") {
-        validarUsuario();
     }
 
     if (tipo === "remedio") {

@@ -1,6 +1,10 @@
 <?php
-include("conexaoBanco.php"); 
 include("verificarSessao.php");
+
+if ($_SESSION["tipo"] !== "Professor" ) {
+    header("Location: /enfermagemProjeto/frontend/login.html");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +57,7 @@ include("verificarSessao.php");
     }
     ?>
 
-    <table class="table table-bordered table-striped" id="tabelaProdutos">
+    <table class="table table-bordered table-striped" id="tabelaRemedios">
 
         <thead class="table-dark">
             <tr>
@@ -172,10 +176,10 @@ else {
 </div>
 
 <script>
-document.getElementById('filtroInput').addEventListener('keyup', function () {
-
+    // script para pesquisa que troca o estilo dos tr para ficar invisíveis caso não sejam pesquisados
+    document.getElementById('filtroInput').addEventListener('keyup', function () {
     let filtro = this.value.toLowerCase();
-    let linhas = document.querySelectorAll('#tabelaProdutos tbody tr');
+    let linhas = document.querySelectorAll('#tabelaRemedios tbody tr');
     for (let i = 0; i < linhas.length; i++) {
         let nome = linhas[i].cells[0].textContent.toLowerCase();
         linhas[i].style.display = nome.includes(filtro) ? '' : 'none';

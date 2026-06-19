@@ -1,6 +1,5 @@
 <?php
 include "logarCadastrar_Funcoes.php";
-include "conexaoBanco.php";
 include "crud_funcoes.php";
 
 // Variáveis usadas como parâmetro apenas pelas funções logar e cadastrar 
