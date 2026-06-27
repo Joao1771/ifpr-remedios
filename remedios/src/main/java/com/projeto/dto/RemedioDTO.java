@@ -4,20 +4,27 @@ import java.util.List;
 
 public class RemedioDTO {
 
-    public Integer id;
-    public String nome;
-    public String bula;
-    public String tipo;
+   public Integer id;
 
-    // Prescrição
-    public String publicoAlvo;
-    public String restricao;
-    public String contraIndicacoes;
-    public String composicao;
-    public String efeitos;
-    public String validade;
+   public String nome;
+   public String bula;
+   public String tipo;
 
-    // Relacionamentos
-    public List<SubstanciaDTO> substancias;
-    public List<String> empresas;
+   public String tarja;
+
+   public String restricao;
+   public String contraIndicacoes;
+   public String efeitos;
+   public String validade;
+   public String conservacao;
+
+   public List<String> publicoAlvo;
+
+   public String substancia;
+   public String substanciaTipo;
+
+   public String empresa;
+   public String cnpj;
+   public String uf;
+   public String cidade;
 }

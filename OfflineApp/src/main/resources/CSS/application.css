@@ -1,0 +1,63 @@
+.root {
+	-fx-background-color: white;
+}
+
+.table-view {
+   -fx-control-background: white;
+}
+/*TAMANHO DO CABEÇALHO*/
+.table-view .column-header {
+    -fx-pref-height: 18px;
+}
+
+/*TEXTO DO CABEÇALHO DE COLUNA*/
+.table-view .column-header .label {
+	-fx-font-size: 11px;
+	-fx-text-fill: white;
+}
+
+/*FUNDO CABEÇALHO DE COLUNA*/
+.table-view .column-header {
+	-fx-background-color: black;
+}
+
+/*FUNDO DAS LINHAS*/
+.table-row-cell {
+	-fx-background-color: white;
+}
+
+/*FUNDO DAS CELULAS*/
+.table-row-cell .table-cell {
+    -fx-background-color: white;
+}
+
+/*TEXTO DAS CÉLULAS*/
+.table-cell {
+	-fx-font-size: 11px;
+   	-fx-text-fill: black;
+   	-fx-alignment: center;
+}
+
+/*LABEL DA CÉLULA EMPRESA*/
+.label {
+	-fx-alignment: center;
+   	-fx-text-alignment: center;
+}
+/*BOTÃO PARA VER PRESCRIÇÃO */
+.botao-prescricao {
+	-fx-text-fill: black;
+	-fx-font-weight: bold;
+	-fx-background-color: white;
+	-fx-border-radius: 0;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+}
+
+.botao-prescricao:hover {
+	-fx-background-color: #b0b0b0;
+}
+
+.gridpane-ver-prescricao {
+	-fx-border-color: black;
+    -fx-border-width: 2;
+}

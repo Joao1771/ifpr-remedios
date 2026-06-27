@@ -6,6 +6,7 @@ import com.projeto.util.JPAUtil;
 
 import jakarta.persistence.EntityManager;
 
+// classe DAO abstrata genérica 
 public abstract class DAO<T> {
 
     private Class<T> classe;
@@ -13,22 +14,22 @@ public abstract class DAO<T> {
     public DAO(Class<T> classe) {
         this.classe = classe;
     }
-
+    //CREATE
     public void salvar(T entidade) {
         EntityManager em = JPAUtil.getEntityManager();
 
         try {
-            em.getTransaction().begin();
-            em.persist(entidade);
-            em.getTransaction().commit();
+            em.getTransaction().begin(); //inicia a transação
+            em.persist(entidade);//insere a entidade no banco
+            em.getTransaction().commit();// commita e encerra
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            em.getTransaction().rollback();//caso de errado volta
             e.printStackTrace();
         } finally {
             em.close();
         }
     }
-
+    //UPDATE
     public void atualizar(T entidade) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -43,16 +44,16 @@ public abstract class DAO<T> {
             em.close();
         }
     }
-
+    //DELETE
     public void deletar(int id) {
         EntityManager em = JPAUtil.getEntityManager();
 
         try {
-            T entidade = em.find(classe, id);
+            T entidade = em.find(classe, id);//busca pelo id
 
             if (entidade != null) {
                 em.getTransaction().begin();
-                em.remove(entidade);
+                em.remove(entidade);// remove o registro
                 em.getTransaction().commit();
             }
 
@@ -63,7 +64,7 @@ public abstract class DAO<T> {
             em.close();
         }
     }
-
+    //READ (find)
     public T buscarPorId(int id) {
         EntityManager em = JPAUtil.getEntityManager();
         T entidade = null;
@@ -78,14 +79,14 @@ public abstract class DAO<T> {
 
         return entidade;
     }
-
+    //READ
     public List<T> listar() {
         EntityManager em = JPAUtil.getEntityManager();
         List<T> lista = null;
 
         try {
-            lista = em.createQuery("FROM " + classe.getSimpleName(), classe)
-                      .getResultList();
+           // mostra uma consulta JPQL
+            lista = em.createQuery("FROM " + classe.getSimpleName(), classe).getResultList();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

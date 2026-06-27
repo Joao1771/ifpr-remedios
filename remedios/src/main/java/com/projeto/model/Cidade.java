@@ -14,7 +14,7 @@ public class Cidade {
     @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "UF")
+    @Column(name = "UF", columnDefinition = "CHAR(2)")
     private String uf;
 
     // Getters e Setters

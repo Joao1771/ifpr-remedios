@@ -16,15 +16,12 @@ public class Empresa {
     @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "CNPJ", nullable = false)
+    @Column(name = "CNPJ", nullable = false, columnDefinition = "CHAR(14)", unique = true)
     private String cnpj;
 
     @ManyToOne
     @JoinColumn(name = "ID_CIDADE")
     private Cidade cidade;
-
-    @OneToMany(mappedBy = "empresa")
-    private List<EmpresaRemedio> empresasRemedios;
 
 
     public Integer getId() {
@@ -54,12 +51,5 @@ public class Empresa {
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
-
-    public List<EmpresaRemedio> getEmpresasRemedios() {
-        return empresasRemedios;
-    }
-
-    public void setEmpresasRemedios(List<EmpresaRemedio> empresasRemedios) {
-        this.empresasRemedios = empresasRemedios;
-    }
+ 
 }

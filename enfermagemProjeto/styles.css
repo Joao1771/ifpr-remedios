@@ -1,0 +1,73 @@
+body {
+      background-image: url('imagens/institutoIFPR.png');
+      background-size: cover;
+
+      position: relative;
+}
+
+#centralizarCadastro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+}
+
+#imagemLogo {
+      margin-bottom: 30px !important;
+
+}
+
+#cadastroDeAcesso {
+      margin-bottom: 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #2f9e41;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background-color: #ffffff;
+      padding: 14px 40px;
+      border-left: 8px solid #2f9e41;
+      border-radius: 6px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      max-width: 500px;
+}
+
+#bordaDosInputs {
+      border: 2px solid #2f9e41;
+      background-color: #eefaf1;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 500px;
+      padding: 30px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+}
+
+.form-label {
+      font-weight: bold;
+}
+
+#submit-btn{
+      width: 100%;
+      height: 45px;
+      background-color: #2f9e41 ;
+      border: none;
+      font-weight: 600;
+      transition: 300ms;
+}
+
+#submit-btn:hover{
+      background-color: white;
+      color: #2f9e41;
+      border: solid 1px #2f9e41;
+}
+
+.erros{
+      color: red;
+      margin-top: -18px;
+      padding-bottom: 20px;
+      font-size: 13px;
+}

@@ -20,8 +20,8 @@ public class Substancia {
     @Column(name = "TIPO")
     private String tipo;
     
-    @OneToMany(mappedBy = "substancia")
-    private List<SubstanciaRemedio> substanciasRemedios = new ArrayList<>();
+    @OneToOne(mappedBy = "substancia")
+    private Remedio remedio;
 
     public int getId() {
        return id;
@@ -48,12 +48,14 @@ public class Substancia {
        this.tipo = tipo;
     }
 
-    public List<SubstanciaRemedio> getSubstanciasRemedios() {
-       return substanciasRemedios;
-   }
+    public Remedio getRemedio() {
+       return remedio;
+    }
 
-   public void setSubstanciasRemedios(List<SubstanciaRemedio> substanciasRemedios) {
-       this.substanciasRemedios = substanciasRemedios;
-   }
+    public void setRemedio(Remedio remedio) {
+       this.remedio = remedio;
+    }
+
+
  
 }

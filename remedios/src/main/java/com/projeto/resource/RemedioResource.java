@@ -3,35 +3,38 @@ package com.projeto.resource;
 import java.util.List;
 import com.projeto.dao.DAO;
 import com.projeto.dao.RemedioDAO;
+import com.projeto.dto.RemedioCadastroDTO;
 import com.projeto.dto.RemedioDTO;
-import com.projeto.model.Remedio;
+import com.projeto.model.*;
+
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+// endpoint para CRUD Remedios
 @Path("/remedios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RemedioResource {
 
-    private RemedioDAO dao = new RemedioDAO();
+   private RemedioDAO remedioDAO = new RemedioDAO();
+   private DAO<Remedio> dao = new DAO<>(Remedio.class) {};
 
-    // LISTAR TODOS
+    //Read
     @GET
     public List<RemedioDTO> listar() {
-        return dao.listar();
+        return remedioDAO.listar();
     }
 
-    // BUSCAR POR ID
+    // Read (id)
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") int id) {
 
-        RemedioDTO dto = dao.buscarPorIdDTO(id);
+        RemedioDTO dto = remedioDAO.buscarPorId(id);
 
-        if (dto == null) {
-            return Response
-                    .status(Response.Status.NOT_FOUND)
+        if (dto == null) { //previne busca de id inválido
+            return Response.status(Response.Status.NOT_FOUND)
                     .entity("Remédio não encontrado")
                     .build();
         }
@@ -39,72 +42,47 @@ public class RemedioResource {
         return Response.ok(dto).build();
     }
 
-    // SALVAR
+    // Create
     @POST
-    public Response salvar(Remedio remedio) {
-
+    public Response salvar(RemedioCadastroDTO dto) {
         try {
-
-            DAO<Remedio> daoGenerico = new DAO<>(Remedio.class) {};
-
-            daoGenerico.salvar(remedio);
-
-            return Response
-                    .status(Response.Status.CREATED)
-                    .entity("Remédio salvo com sucesso")
+            remedioDAO.salvarDoDTO(dto); // ← única mudança
+            return Response.status(Response.Status.CREATED)
+                    .entity("Remédio criado com sucesso")
                     .build();
-
         } catch (Exception e) {
-
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro ao salvar remédio")
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
                     .build();
         }
     }
-
-    // ATUALIZAR
+    
+    // Update
     @PUT
     @Path("/{id}")
-    public Response atualizar(@PathParam("id") int id,
-                              Remedio remedio) {
-
+    public Response atualizar(@PathParam("id") int id, RemedioCadastroDTO dto) {
         try {
-
-            remedio.setId(id);
-
-            DAO<Remedio> daoGenerico = new DAO<>(Remedio.class) {};
-
-            daoGenerico.atualizar(remedio);
-
+            remedioDAO.atualizarDoDTO(id, dto);
             return Response.ok("Remédio atualizado").build();
-
         } catch (Exception e) {
-
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("Erro ao atualizar remédio")
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity(e.getMessage())
                     .build();
         }
     }
 
-    // DELETAR
+    // Delete
     @DELETE
     @Path("/{id}")
     public Response deletar(@PathParam("id") int id) {
 
         try {
-
-            DAO<Remedio> daoGenerico = new DAO<>(Remedio.class) {};
-
-            daoGenerico.deletar(id);
+            dao.deletar(id);
 
             return Response.ok("Remédio removido").build();
 
         } catch (Exception e) {
-
-            return Response
-                    .status(Response.Status.INTERNAL_SERVER_ERROR)
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity("Erro ao remover remédio")
                     .build();
         }

@@ -1,10 +1,14 @@
-Cadastro: http://localhost/remedios/arquivosPHP/cadastrar.php
+Cadastro: 
+http://localhost/enfermagemProjeto/frontend/cadastro.html
 
-Listar remédios: http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios.php
+Listar remédios: 
+http://localhost/enfermagemProjeto/arquivosPHP/paginaDosRemedios_AcessoProfessor.php
 
-Listar remédios (JSON) do Servlet: http://localhost:8080/remedios/api/remedios
+Listar remédios (JSON) do Servlet: 
+http://localhost:8080/remedios/api/remedios
 
-GIT:
+
+GIT
 
 git remote add origin https://github.com/Joao1771/ifpr-remedios
 

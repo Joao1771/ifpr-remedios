@@ -14,8 +14,6 @@ public class PublicoAlvo {
     @Column(name = "NOME", nullable = false, length = 50)
     private String nome;
 
-    // Getters e Setters
-
     public Integer getId() {
         return id;
     }
