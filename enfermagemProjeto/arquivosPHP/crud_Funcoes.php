@@ -10,9 +10,6 @@ function adicionar(
     $contraIndicacoes,
     $efeitos,
     $empresa,
-    $cnpj,
-    $cidade,
-    $uf,
     $substancia,
     $substancia_tipo,
     $tarja,
@@ -20,26 +17,26 @@ function adicionar(
     $conservacao
 ) {
 
-$dados = [
+    $dados = [
 
-    "nome" => $nome,
-    "bula" => $bula,
-    "tipo" => $tipoRemedio,
+        "nome" => $nome,
+        "bula" => $bula,
+        "tipo" => $tipoRemedio,
 
-    "idEmpresa" => (int)$empresa,
-    "idTarja" => (int)$tarja,
+        "idEmpresa" => (int)$empresa,
+        "idTarja" => (int)$tarja,
 
-    "idPublicoAlvo" => array_map('intval', $publicoAlvo),
+        "idPublicoAlvo" => array_map('intval', $publicoAlvo),
 
-    "restricao" => $restricao,
-    "contraIndicacoes" => $contraIndicacoes,
-    "efeitos" => $efeitos,
-    "validade" => $validade,
-    "conservacao" => $conservacao,
+        "restricao" => $restricao,
+        "contraIndicacoes" => $contraIndicacoes,
+        "efeitos" => $efeitos,
+        "validade" => $validade,
+        "conservacao" => $conservacao,
 
-    "substancia" => $substancia,
-    "substanciaTipo" => $substancia_tipo
-];
+        "substancia" => $substancia,
+        "substanciaTipo" => $substancia_tipo
+    ];
 
     $json = json_encode($dados);
 
@@ -71,7 +68,6 @@ $dados = [
         );
 
         exit;
-
     } else {
 
         echo "Erro ao cadastrar remédio.";
@@ -81,6 +77,24 @@ $dados = [
 }
 
 
+
+function apagarBulaDoRemedio($id)
+{
+    $urlBusca = "http://localhost:8080/remedios/api/remedios/" . $id;
+    $ch = curl_init($urlBusca);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $remedio = json_decode($response, true);
+
+    if (!empty($remedio['bula'])) {
+        $caminhoFisico = $_SERVER['DOCUMENT_ROOT'] . "/enfermagemProjeto/" . $remedio['bula'];
+        if (file_exists($caminhoFisico)) {
+            unlink($caminhoFisico);
+        }
+    }
+}
 
 function editar(
     $id,
@@ -98,118 +112,60 @@ function editar(
     $validade_paraAlterar,
     $conservacao_paraAlterar
 ) {
+    // Só apaga a bula antiga se uma nova foi enviada
+    if (!empty($bula_paraAlterar)) {
+        apagarBulaDoRemedio($id);
+    }
 
     $dados = [
-
-        "nome" => $nome_paraAlterar,
-        "bula" => $bula_paraAlterar,
-        "tipo" => $tipoRemedio_paraAlterar,
-
-        "idEmpresa" => (int)$empresa_paraAlterar,
-        "idTarja" => (int)$tarja_paraAlterar,
-
-        "idPublicoAlvo" => array_map(
-            'intval',
-            $publicoAlvo_paraAlterar ?? []
-        ),
-
-        "restricao" => $restricao_paraAlterar,
+        "nome"             => $nome_paraAlterar,
+        "bula"             => $bula_paraAlterar,
+        "tipo"             => $tipoRemedio_paraAlterar,
+        "idEmpresa"        => (int)$empresa_paraAlterar,
+        "idTarja"          => (int)$tarja_paraAlterar,
+        "idPublicoAlvo"    => array_map('intval', $publicoAlvo_paraAlterar ?? []),
+        "restricao"        => $restricao_paraAlterar,
         "contraIndicacoes" => $contraIndicacoes_paraAlterar,
-        "efeitos" => $efeitos_paraAlterar,
-        "validade" => $validade_paraAlterar,
-        "conservacao" => $conservacao_paraAlterar,
-
-        "substancia" => $substancia_paraAlterar,
-        "substanciaTipo" => $substancia_tipo_paraAlterar
+        "efeitos"          => $efeitos_paraAlterar,
+        "validade"         => $validade_paraAlterar,
+        "conservacao"      => $conservacao_paraAlterar,
+        "substancia"       => $substancia_paraAlterar,
+        "substanciaTipo"   => $substancia_tipo_paraAlterar
     ];
 
-    $json = json_encode(
-        $dados,
-        JSON_UNESCAPED_UNICODE
-    );
-
-    $curl = curl_init(
-        "http://localhost:8080/remedios/api/remedios/" . $id
-    );
-
+    $curl = curl_init("http://localhost:8080/remedios/api/remedios/" . $id);
     curl_setopt_array($curl, [
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CUSTOMREQUEST => "PUT",
-        CURLOPT_HTTPHEADER => [
-            "Content-Type: application/json"
-        ],
-        CURLOPT_POSTFIELDS => $json
+        CURLOPT_CUSTOMREQUEST  => "PUT",
+        CURLOPT_HTTPHEADER     => ["Content-Type: application/json"],
+        CURLOPT_POSTFIELDS     => json_encode($dados, JSON_UNESCAPED_UNICODE)
     ]);
-
     $resposta = curl_exec($curl);
     $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
     curl_close($curl);
 
     if ($httpCode >= 200 && $httpCode < 300) {
-
-        header(
-            "Location: paginaDosRemedios_AcessoProfessor.php?editado=1"
-        );
+        header("Location: paginaDosRemedios_AcessoProfessor.php?editado=1");
         exit;
     }
-
     echo "Erro ao editar.<br>";
     echo $resposta;
 }
 
 function excluir($id)
 {
-    // Buscar o remédio para obter a bula
-    $urlBusca = "http://localhost:8080/remedios/api/remedios/" . $id;
+    apagarBulaDoRemedio($id);
 
-    $ch = curl_init($urlBusca);
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-    $response = curl_exec($ch);
-
-    curl_close($ch);
-
-    $remedio = json_decode($response, true);
-
-    // Apagar o PDF do frontend se existir
-    if (!empty($remedio['bula'])) {
-
-        $caminhoFisico =
-            $_SERVER['DOCUMENT_ROOT'] .
-            "/enfermagemProjeto/" .
-            $remedio['bula'];
-
-        if (file_exists($caminhoFisico)) {
-            unlink($caminhoFisico);
-        }
-    }
-
-    // Excluir o remédio pela API
-    $urlDelete =
-        "http://localhost:8080/remedios/api/remedios/" . $id;
-
-    $ch = curl_init($urlDelete);
-
+    $ch = curl_init("http://localhost:8080/remedios/api/remedios/" . $id);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
     $response = curl_exec($ch);
-
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
     curl_close($ch);
 
     if ($httpCode == 200 || $httpCode == 204) {
-
-        header(
-            "Location: paginaDosRemedios_AcessoProfessor.php?excluido=1"
-        );
-
+        header("Location: paginaDosRemedios_AcessoProfessor.php?excluido=1");
         exit;
     }
-
     echo "Erro ao excluir. Código HTTP: " . $httpCode;
 }
-?>

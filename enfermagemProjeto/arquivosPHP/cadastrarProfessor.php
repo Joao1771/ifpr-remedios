@@ -1,9 +1,9 @@
 <?php
 include("verificarSessao.php");
 
-if ($_SESSION["tipo"] !== "Professor" ) {
-    header("Location: /enfermagemProjeto/frontend/login.html");
-    exit;
+if ($_SESSION["tipo"] !== "Professor") {
+  header("Location: /enfermagemProjeto/frontend/login.html");
+  exit;
 }
 ?>
 
@@ -32,18 +32,18 @@ if ($_SESSION["tipo"] !== "Professor" ) {
     </h2>
 
 
-    <form 
-    action="/enfermagemProjeto/arquivosPHP/chamarFuncoes.php?acao=cadastro" method="post"
+    <form
+      action="/enfermagemProjeto/arquivosPHP/chamarFuncoes.php?acao=cadastro" method="post"
       style="width: 100%; max-width: 500px;">
 
       <div id="bordaDosInputs">
 
         <label class="form-label" for="email">E-mail</label>
 
-        <input 
-          type="email" 
-          class="form-control" 
-          style="margin-bottom:25px; height: 45px;" 
+        <input
+          type="email"
+          class="form-control"
+          style="margin-bottom:25px; height: 45px;"
           name="email"
           placeholder="Digite seu email"
           id="email">
@@ -51,14 +51,14 @@ if ($_SESSION["tipo"] !== "Professor" ) {
 
         <label class="form-label" for="senha">Senha</label>
 
-        <input 
-          type="password" 
-          class="form-control" 
-          style="margin-bottom:25px; height: 45px;" 
+        <input
+          type="password"
+          class="form-control"
+          style="margin-bottom:25px; height: 45px;"
           name="senha"
           placeholder="Digite sua senha"
           id="senha">
-          <p class="erros"></p>
+        <p class="erros"></p>
 
         <label class="form-label">Nível de acesso</label>
         <input type="text" value="Professor" name="tipo" readonly class="form-control"

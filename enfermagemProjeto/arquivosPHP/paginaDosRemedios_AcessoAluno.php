@@ -61,7 +61,7 @@ include("verificarSessao.php");
 
                     echo "<tr>";
                     echo "<td>". $row['nome'] ."</td>";
-                    echo "<td><a href='". $row['bula'] ."' target='_blank'>Ver Bula</a></td>";
+                    echo "<td><a href='/enfermagemProjeto/{$row['bula']}' target='_blank'>Ver Bula</a></td>";
                     echo "<td>". $row['tipo'] ."</td>";
                     echo "<td>". implode(", ", $row['publicoAlvo']) ."</td>";
                     echo "<td>". $row['restricao'] ."</td>";

@@ -3,29 +3,29 @@ include "logarCadastrar_Funcoes.php";
 include "crud_funcoes.php";
 
 // Variáveis usadas como parâmetro apenas pelas funções logar e cadastrar 
-$email = $_POST["email"]?? null;                                                  
-$senha = $_POST['senha']??  null;                                                  
-$tipo = $_POST["tipo"]?? null;                                                   
+$email = $_POST["email"] ?? null;
+$senha = $_POST['senha'] ??  null;
+$tipo = $_POST["tipo"] ?? null;
 
 
-$nome  = $_POST["nome"]?? null ; 
+$nome  = $_POST["nome"] ?? null;
 $bula = null;
-$tipoRemedio  = $_POST["tipoRemedio"]?? null; 
+$tipoRemedio  = $_POST["tipoRemedio"] ?? null;
 $publicoAlvo = $_POST["publicoAlvo"] ?? [];
 
 
-$contraIndicacoes  = $_POST["contraIndicacoes"]?? null; 
-$efeitos  = $_POST["efeitos"]?? null; 
+$contraIndicacoes  = $_POST["contraIndicacoes"] ?? null;
+$efeitos  = $_POST["efeitos"] ?? null;
 $restricao  = $_POST["restricao"] ?? null;
-$empresa  = $_POST["empresa"]?? null ; 
-$cnpj  = $_POST["cnpj"]?? null; 
-$cidade  = $_POST["cidade"]?? null; 
-$uf = $_POST["uf"]?? null; 
-$substancia  = $_POST["substancia"]?? null; 
-$substancia_tipo  = $_POST["substancia_tipo"]?? null; 
-$tarja = $_POST['tarja']?? null;
-$validade = $_POST['validade']?? null;
-$conservacao = $_POST['conservacao']?? null;
+$empresa  = $_POST["empresa"] ?? null;
+$cnpj  = $_POST["cnpj"] ?? null;
+$cidade  = $_POST["cidade"] ?? null;
+$uf = $_POST["uf"] ?? null;
+$substancia  = $_POST["substancia"] ?? null;
+$substancia_tipo  = $_POST["substancia_tipo"] ?? null;
+$tarja = $_POST['tarja'] ?? null;
+$validade = $_POST['validade'] ?? null;
+$conservacao = $_POST['conservacao'] ?? null;
 
 $id = $_GET['id'] ?? null;
 
@@ -34,13 +34,13 @@ $tipoRemedio_paraAlterar  = $_POST["tipoRemedio_paraAlterar"] ?? null;
 $publicoAlvo_paraAlterar = $_POST["publicoAlvo_paraAlterar"] ?? [];
 $restricao_paraAlterar  = $_POST["restricao_paraAlterar"] ?? null;
 $contraIndicacoes_paraAlterar  = $_POST["contraIndicacoes_paraAlterar"] ?? null;
-$efeitos_paraAlterar  = $_POST["efeitos_paraAlterar"] ?? null; 
-$tarja_paraAlterar = $_POST['tarja_paraAlterar']?? null; 
-$validade_paraAlterar = $_POST['validade_paraAlterar']?? null; 
-$conservacao_paraAlterar = $_POST['conservacao_paraAlterar']?? null;
+$efeitos_paraAlterar  = $_POST["efeitos_paraAlterar"] ?? null;
+$tarja_paraAlterar = $_POST['tarja_paraAlterar'] ?? null;
+$validade_paraAlterar = $_POST['validade_paraAlterar'] ?? null;
+$conservacao_paraAlterar = $_POST['conservacao_paraAlterar'] ?? null;
 
-$substancia_paraAlterar = $_POST['substancia_paraAlterar'] ?? null; 
-$substancia_tipo_paraAlterar = $_POST['substancia_tipo_paraAlterar'] ?? null; 
+$substancia_paraAlterar = $_POST['substancia_paraAlterar'] ?? null;
+$substancia_tipo_paraAlterar = $_POST['substancia_tipo_paraAlterar'] ?? null;
 
 if ($uf === "NULL") { //adaptar UF para ser null no banco
     $uf = null;
@@ -113,22 +113,46 @@ if (isset($_GET["acao"]) && $_GET["acao"] === "cadastro") {
     cadastrar($email, $senha, $tipo);
 }
 if (isset($_GET["acao"]) && $_GET["acao"] === "cadastroProfessor") {
-    cadastroProfessor($email, $senha, $conn, $tipo);
+    cadastrar($email, $senha, $tipo);
 }
 // Ação de adicionar mais remédios
 if (isset($_GET["acao"]) && $_GET["acao"] === "adicionar") {
-    adicionar($nome,$bula, $tipoRemedio, $publicoAlvo, $restricao, $contraIndicacoes, $efeitos,$empresa,$cnpj,$cidade,$uf,$substancia,$substancia_tipo,$tarja,
-$validade,$conservacao);
+    adicionar(
+        $nome,
+        $bula,
+        $tipoRemedio,
+        $publicoAlvo,
+        $restricao,
+        $contraIndicacoes,
+        $efeitos,
+        $empresa,
+        $substancia,
+        $substancia_tipo,
+        $tarja,
+        $validade,
+        $conservacao
+    );
 }
 // Ação de editar remédios
 if (isset($_GET["acao"]) && $_GET["acao"] === "editar") {
     editar(
-    $id,$nome_paraAlterar,$bula_paraAlterar,$tipoRemedio_paraAlterar,$publicoAlvo_paraAlterar,$restricao_paraAlterar,$contraIndicacoes_paraAlterar,$efeitos_paraAlterar,
-    $empresa,$substancia_paraAlterar,$substancia_tipo_paraAlterar,$tarja_paraAlterar,$validade_paraAlterar,$conservacao_paraAlterar
-);
+        $id,
+        $nome_paraAlterar,
+        $bula_paraAlterar,
+        $tipoRemedio_paraAlterar,
+        $publicoAlvo_paraAlterar,
+        $restricao_paraAlterar,
+        $contraIndicacoes_paraAlterar,
+        $efeitos_paraAlterar,
+        $empresa,
+        $substancia_paraAlterar,
+        $substancia_tipo_paraAlterar,
+        $tarja_paraAlterar,
+        $validade_paraAlterar,
+        $conservacao_paraAlterar
+    );
 }
 // Ação de excluir remédios
 if (isset($_GET["acao"]) && $_GET["acao"] === "excluir") {
     excluir($id);
 }
-?>

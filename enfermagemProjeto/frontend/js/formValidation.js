@@ -19,7 +19,7 @@ const uf = document.querySelector("#uf");
 const substancia = document.querySelector("#substancia");
 const substanciaTipo = document.querySelector("#substancia_tipo");
 
-    
+
 const email = document.getElementById("email");
 const senha = document.getElementById("senha");
 const erros = document.getElementsByClassName("erros");
@@ -66,89 +66,88 @@ function verifyCampo(campo, mensagem = erroVazio) {
     return false;
 }
 
-if(form && email && senha) {
-form.addEventListener("submit", function (e) {
+if (form && email && senha) {
+    form.addEventListener("submit", function (e) {
 
-    // limpa erros
-    erros[0].innerHTML = "";
-    erros[1].innerHTML = "";
-    alert(senha)
+        // limpa erros
+        erros[0].innerHTML = "";
+        erros[1].innerHTML = "";
 
-    let temMaiuscula = false;
-    let temNumero = false;
-    let temErro = false;
+        let temMaiuscula = false;
+        let temNumero = false;
+        let temErro = false;
 
-    function nomeDominioEmail(emailTexto) {
-        const partes = emailTexto.split("@");
+        function nomeDominioEmail(emailTexto) {
+            const partes = emailTexto.split("@");
 
-        if (partes.length < 2) {
-            return "";
+            if (partes.length < 2) {
+                return "";
+            }
+
+            const dominio = partes[1];
+            const nomeDominio = dominio.split(".")[0];
+
+            return "@" + nomeDominio;
         }
 
-        const dominio = partes[1];
-        const nomeDominio = dominio.split(".")[0];
+        let nomeDominio = nomeDominioEmail(email.value);
 
-        return "@" + nomeDominio;
-    }
+        let dominioPermitido = false;
 
-    let nomeDominio = nomeDominioEmail(email.value);
-
-    let dominioPermitido = false;
-
-    for (let indice = 0; indice < tiposLogin.length; indice++) {
-        if (tiposLogin[indice] === nomeDominio) {
-            dominioPermitido = true;
-            break;
-        }
-    }
-
-    if (!dominioPermitido && email.value !== "") {
-        erros[0].innerHTML = "Use apenas gmail, outlook, hotmail ou ifpr.edu.br";
-        temErro = true;
-    }
-
-    if (email.value === "") {
-        erros[0].innerHTML = "Digite o e-mail";
-        temErro = true;
-    }
-
-    for (let i = 0; i < senha.value.length; i++) {
-        let caractere = senha.value[i];
-
-        if (caractere >= "A" && caractere <= "Z") {
-            temMaiuscula = true;
+        for (let indice = 0; indice < tiposLogin.length; indice++) {
+            if (tiposLogin[indice] === nomeDominio) {
+                dominioPermitido = true;
+                break;
+            }
         }
 
-        if (caractere >= "0" && caractere <= "9") {
-            temNumero = true;
+        if (!dominioPermitido && email.value !== "") {
+            erros[0].innerHTML = "Use apenas gmail, outlook, hotmail ou ifpr.edu.br";
+            temErro = true;
         }
-    }
 
-    if (!temMaiuscula || !temNumero) {
-        erros[1].innerHTML = "A senha deve ter pelo menos uma letra maiúscula e um número";
-        temErro = true;
-    }
+        if (email.value === "") {
+            erros[0].innerHTML = "Digite o e-mail";
+            temErro = true;
+        }
 
-    if (senha.value === "") {
-        erros[1].innerHTML = "Digite a senha";
-        temErro = true;
-    }
+        for (let i = 0; i < senha.value.length; i++) {
+            let caractere = senha.value[i];
 
-    if (senha.value.length > 30) {
-        erros[1].innerHTML = "Senha deve ter no máximo 30 caracteres";
-        temErro = true;
-    }
+            if (caractere >= "A" && caractere <= "Z") {
+                temMaiuscula = true;
+            }
 
-    if (senha.value.length < 6 && senha.value !== "") {
-        erros[1].innerHTML = "Senha deve ter pelo menos 6 caracteres";
-        temErro = true;
-    }
+            if (caractere >= "0" && caractere <= "9") {
+                temNumero = true;
+            }
+        }
 
-    // bloqueia envio se tiver erro
-    if (temErro) {
-        e.preventDefault();
-    }
-});
+        if (!temMaiuscula || !temNumero) {
+            erros[1].innerHTML = "A senha deve ter pelo menos uma letra maiúscula e um número";
+            temErro = true;
+        }
+
+        if (senha.value === "") {
+            erros[1].innerHTML = "Digite a senha";
+            temErro = true;
+        }
+
+        if (senha.value.length > 30) {
+            erros[1].innerHTML = "Senha deve ter no máximo 30 caracteres";
+            temErro = true;
+        }
+
+        if (senha.value.length < 6 && senha.value !== "") {
+            erros[1].innerHTML = "Senha deve ter pelo menos 6 caracteres";
+            temErro = true;
+        }
+
+        // bloqueia envio se tiver erro
+        if (temErro) {
+            e.preventDefault();
+        }
+    });
 }
 
 
@@ -221,7 +220,7 @@ function verifyPublicoAlvo() {
 //     return false;
 // }
 
-if(nome && bula){
+if (nome && bula) {
     form.addEventListener("submit", e => {
 
         clearErrors();
